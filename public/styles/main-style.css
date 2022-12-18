@@ -34,12 +34,20 @@ main {
 }
 
 body {
+    padding: 0;
+    margin: 0;
+}
+
+.main-body {
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
     justify-content: space-between;
+
+    margin-top: 3.5rem;
+    min-height: calc(100vh - 3.5rem);
 }
 
 
@@ -48,6 +56,12 @@ body {
 header {
     background-color: aquamarine;
     height: 3.5rem;
+    box-sizing: border-box;
+    border-bottom: 2px solid #66CCAA;
+    
+    width: 100%;
+    position: fixed;
+    top: 0;
 }
 
 a {
@@ -138,15 +152,23 @@ a {
     justify-content: space-around;
 }
 
+.profile-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    /* border: 1px solid red; */
+    width: 100%;
+}
+
 .profile-section1 {
     display: flex;
     flex-direction: column;
     border-radius: 5px;
     /**************/
-    width: 80%;
+    width: 70%;
     border: 1px solid gray;
     margin-top: 2rem;
-    padding: 1rem;
+    /* padding: 1rem; */
 }
 
 .profile-name {
@@ -167,7 +189,8 @@ a {
 }
 
 .profile-section2 {
-    margin-top: 3rem;
+    margin-top: 2rem;
+    width: 30%;
 }
 
 .profile-list-item {
@@ -187,7 +210,100 @@ a {
     font-weight: bold;
 }
 
+#button-submit-comment {
+    text-decoration: underline;
+}
+
+#open-submit-comment-form:hover {
+    cursor: pointer;
+    color: green;
+    font-weight: bold;
+}
+
+.comment-form {
+    display: none;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+.comment-textarea {
+    width: 100%;
+    border-radius: 5px;
+    border: none;
+    padding: 1rem;
+    margin: 0.5rem 0;
+}
+
+#comment-message {
+    display: none;
+    width: 100%;
+    text-align: center;
+    margin: 0.5rem 0;
+    padding: 0.5rem 0;
+    font-weight: bold;
+}
+
+.comment-message-success {
+    background-color: green;
+    color: yellow;
+}
+
+.comment-message-fail {
+    background-color: red;
+    color: yellow;
+}
+
+.comment-buttons-container {
+
+}
+
+.comment-buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+
+.comment-buttons > button {
+    min-width: 80%;
+    border-radius: 8px;
+    border: none;
+    font-weight: bold;
+    padding: 0.5rem;
+}
+
+.comment-buttons > button:nth-child(2) {
+    background-color: lightcoral;
+    color: yellow;
+    border: 2px solid red;
+}
+
+.comment-buttons > button:nth-child(2):hover {
+    cursor: pointer;
+    background-color: maroon;
+}
+
+.comment-buttons > button:nth-child(1) {
+    background-color: lightgreen;
+    color: blue;
+    border: 2px solid green;
+}
+
+.comment-buttons > button:nth-child(1):hover {
+    cursor: pointer;
+    background-color: greenyellow;
+}
+
 /* sideBar */
+.sideBar-others {
+    padding: 1rem;
+    border: 1px solid grey;
+    border-radius: 8px;
+    width: 100%;
+}
+
 .sideBar-others h2 {
     text-align: center;
     padding: 0;
@@ -198,12 +314,6 @@ a {
 .sideBar-others ul {
     margin: 0;
     padding: 0;
-}
-
-.sideBar-others {
-    padding: 1rem;
-    border: 1px solid grey;
-    border-radius: 8px;
 }
 
 .sideBar {
@@ -291,6 +401,8 @@ footer {
     justify-content: center;
     align-items: center;
     font-weight: bold;
+    box-sizing: border-box;
+    border-top: 2px solid #66CCAA;
 }
 
 
@@ -314,6 +426,7 @@ footer {
 /* profiles */
 .details-profile-container {
     display: flex;
+    gap: 2rem;
 }
 
 .img-container {
@@ -321,8 +434,9 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border: 1px solid red;
-    width: 50%;
+    /* border: 1px solid red; */
+    margin-left: 1rem;
+    width: 45%;
     justify-content: flex-start;
 }
 
@@ -350,20 +464,20 @@ footer {
 }
 
 .comments-container {
-    border: 1px solid blue;
-    width: 50%;
+    /* border: 1px solid blue; */
+    width: 55%;
     /* overflow: scroll; */
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
+    margin-right: 1rem;
 }
 
 .individual-comment {
-    width: 90%;
+    width: 100%;
     border: 1px solid lightcyan;
     border-radius: 7px;
-    margin: auto;
     margin-bottom: 1rem;
     padding: 0.5rem;
 }

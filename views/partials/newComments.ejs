@@ -1,0 +1,39 @@
+
+<form 
+    action="/addComment"
+    method="post"
+    id="comment-form"
+    class="comment-form"
+>
+    <div>
+        <textarea 
+            placeholder="Place your comment"
+            class="comment-textarea"
+            rows="5"
+            id="comment-textarea"
+        ></textarea>
+    </div>
+
+    <div class="comment-buttons-container">
+        <!-- <div id="comment-message" class="comment-message-success comment-message-fail" style="border: 2px solid lime;"> -->
+        <div id="comment-message">
+        </div>
+        <button id="comment-after-submit-button" style="display: none;"></button>
+    
+        <div id="comment-buttons" class="comment-buttons">
+            <button 
+                id="comment-submit"
+                title="Send out your comment"
+            >
+                Submit
+            </button>
+            <button 
+                id="comment-cancel"
+                title="Cancel comment"
+            >
+                Cancel
+            </button>
+            
+        </div>
+    </div>
+</form> 
