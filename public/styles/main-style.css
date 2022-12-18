@@ -132,7 +132,7 @@ a {
 
 /* profile page */
 .profile-container {
-    padding: 0 10rem;
+    padding: 0 5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -143,6 +143,7 @@ a {
     flex-direction: column;
     border-radius: 5px;
     /**************/
+    width: 80%;
     border: 1px solid gray;
     margin-top: 2rem;
     padding: 1rem;
@@ -157,8 +158,8 @@ a {
     text-align: center;
 }
 
-.profile-inters ul {
-    padding-left: 5rem;
+.profile-inters h3 {
+    text-align: center;
 }
 
 .profile-list {
@@ -309,10 +310,29 @@ footer {
     margin: 0;
 }
 
+
+/* profiles */
+.details-profile-container {
+    display: flex;
+}
+
+.img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid red;
+    width: 50%;
+    justify-content: flex-start;
+}
+
 .profile-pic {
     border-radius: 7px;
     padding: 0.5rem;
     border: 1px dotted gray;
+    background-color: azure;
+    max-height: 200px;
+    width: fit-content;
 }
 
 .text-centered {
@@ -329,6 +349,49 @@ footer {
     text-align: center;
 }
 
+.comments-container {
+    border: 1px solid blue;
+    width: 50%;
+    /* overflow: scroll; */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.individual-comment {
+    width: 90%;
+    border: 1px solid lightcyan;
+    border-radius: 7px;
+    margin: auto;
+    margin-bottom: 1rem;
+    padding: 0.5rem;
+}
+
+.individual-comment > span {
+    display: block;
+    text-align: center;
+    font-weight: bold;
+}
+.individual-comment > p {
+    margin: 0;
+    padding: 0;
+    text-indent: 1rem;
+}
+.individual-comment > p::first-letter {
+    font-weight: bold;
+    font-size: calc(100% + 3px);
+}
+.individual-comment:nth-child(even) > span {
+    color: darkblue;
+}
+.individual-comment:nth-child(odd) > span {
+    color: darkred;
+}
+
+
+
+/* create page*/
 .create-page {
     border: 1px solid gray;
     padding: 1rem;

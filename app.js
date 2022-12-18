@@ -3,6 +3,11 @@
 // connects to the DB
 require("./db/connect.js");
 
+/*
+
+how's the Model relates to the db connection
+
+*/
 
 
 

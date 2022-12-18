@@ -14,36 +14,67 @@
                 <h2 class="details-h2">Details Profile</h2>
                 <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
             </div>
-            <h2 id="message" class="success-message"> <%= msg %> </h2>
+
+            <% if (msg !== "") { %>
+                <h2 id="message" class="success-message"> <%= msg %> </h2>
+            <% } %>
   
-            <div style="width: 350px;">
-                <p class="text-centered">Profile Id: <%= profile._id %> </p>
-                <h1 class="profile-name"><%= profile.name %></h1>
-                <h3>Your Image</h3>
-                <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
-                    <h4 class="text-centered">No picture added so far</h4>
-                <% } else { %>
-                    <img
-                        src="/images/<%=profile.imagePath%>"
-                        alt=""
-                        width="100%"
-                        class="profile-pic"
-                    />
-                <% } %>
+            <div class="details-profile-container">
+                <div 
+                    class="img-container"
+                >
+                    <h1 class="profile-name"><%= profile.name %></h1>
+                    <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
+                        <h4 class="text-centered">No picture added so far</h4>
+                    <% } else { %>
+                        <img
+                            src="/images/<%=profile.imagePath%>"
+                            alt=""
+                            width="100%"
+                            class="profile-pic"
+                        />
+                    <% } %>
+
+                    <div class="profile-inters">
+                        <h3>Interests</h3>
+                        <% if (profile.interests.length < 1) { %>
+                            <h4 class="text-centered">No interestes added so far</h4>
+                        <% } else { %>
+                            <ul class="profile-list">
+                                <% for (let i = 0; i < profile.interests.length; i++) { %>
+                                    <li><%= profile.interests[i]%></li>
+                                <% } %>
+                            </ul>
+                        <% } %>
+                    </div>
+                </div>
+
+                <div class="comments-container">
+                    <h3>Comments</h3>
+                    <!-- make it a for loop for each comment -->
+                    <div class="individual-comment">
+                        <span>UserX - Dec 17, 2022 - 15:50</span>
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, 
+                            tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro 
+                            ipsum eos totam hic.
+                        </p>
+                    </div>
+                    <div class="individual-comment">
+                        <span>UserX - Dec 17, 2022 - 15:50</span>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro ipsum eos totam hic.
+                    </div>
+                    <div class="individual-comment">
+                        <span>UserX - Dec 17, 2022 - 15:50</span>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro ipsum eos totam hic.
+                    </div>
+                    <div class="individual-comment">
+                        <span>UserX - Dec 17, 2022 - 15:50</span>
+                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro ipsum eos totam hic.
+                    </div>
+                </div>
             </div>
 
-            <div class="profile-inters">
-                <h3>Interests</h3>
-                <% if (profile.interests.length < 1) { %>
-                    <h4 class="text-centered">No interestes added so far</h4>
-                <% } else { %>
-                    <ul class="profile-list">
-                        <% for (let i = 0; i < profile.interests.length; i++) { %>
-                            <li><%= profile.interests[i]%></li>
-                        <% } %>
-                    </ul>
-                <% } %>
-            </div>
         </article>
         
         <article class="profile-section2">
