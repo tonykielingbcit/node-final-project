@@ -1,3 +1,5 @@
+"use strict"
+
 const submitBt = document.getElementById("submitButton");
 const txtArea = document.getElementById("txtArea");
 const message = document.getElementById("message");

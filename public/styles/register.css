@@ -37,8 +37,17 @@
 .margin-botton {
     margin-bottom: 0.5rem;
 }
-.error-message {
+
+.error-message-none {
     display: none;
+}
+.error-message-yes {
+    background-color: lightcoral;
+    display: block;
+    min-width: 70%;
+    padding: 0.5rem;
+    border-radius: 8px;
+    text-align: center;
 }
 
 #register-add-button {
@@ -49,4 +58,18 @@
     background-color: goldenrod;
     color: green;
     font-size: calc(100% + 7px);
+}
+
+
+
+@media only screen and (min-width: 600px) {
+    .form-container {
+        width: 50%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .form-container {
+        width: 30%;
+    }
 }

@@ -6,16 +6,11 @@ const ProfileActions = require("../data/profilesActions.js");
 // instantiate the class so we can use its methods
 const _profileActions = new ProfileActions();
 
-exports.Index = async function (req, res) {
+exports.Create = async function (req, res) {
   console.log("--- inside register form CONTROLLER!!!");
-  // console.log("REQUEST:::::::::::", request.session);
-  // console.log("loading profiles from controller");
-  // let profiles = await _profileActions.getAllProfiles();
-  // return response.render("profiles", {
-  //   title: "Express Yourself - Profiles",
-  //   profiles: profiles.length ? profiles : [],
-  // });
-  return res.render("register", {title: "REGISTER TITLE"});
+  console.log("CREATE GEeeeeeeeeeT");
+  
+  return res.render("register", {title: "REGISTER TITLE", profile: {}});
 };
 
 exports.Search = async (req, res) => {
@@ -30,42 +25,64 @@ exports.Search = async (req, res) => {
       });
 }
 
-exports.Detail = async function (request, response) {
-  const profileId = request.params.id;
-  console.log(`loading single profile by id ${profileId}`);
-  let profile = await _profileActions.getProfileById(profileId, true);
+// exports.Detail = async function (request, response) {
+//   const profileId = request.params.id;
+//   console.log(`loading single profile by id ${profileId}`);
+//   let profile = await _profileActions.getProfileById(profileId, true);
 
-  let profiles = await _profileActions.getAllProfiles();
-  profiles = profiles.filter(e => e._id.toString() !== profileId);
+//   let profiles = await _profileActions.getAllProfiles();
+//   profiles = profiles.filter(e => e._id.toString() !== profileId);
 
-  if (profile) {
-    response.render("profile-details", {
-      title: "Express Yourself - " + profile.name,
-      profiles,
-      profile,
-      layoutPath: "./layouts/sideBar.ejs"
-    });
-  } else {
-    response.render("profiles", {
-      title: "Express Yourself - Profiles",
-      profiles: [],
-    });
-  }
-};
-
-// Handle profile form GET request
-exports.Create = async function (request, response) {
-    response.render("profile-create", {
-        title: "Create Profile",
-        errorMessage: "",
-        profile: {},
-    });
-};
+//   if (profile) {
+//     response.render("profile-details", {
+//       title: "Express Yourself - " + profile.name,
+//       profiles,
+//       profile,
+//       layoutPath: "./layouts/sideBar.ejs"
+//     });
+//   } else {
+//     response.render("profiles", {
+//       title: "Express Yourself - Profiles",
+//       profiles: [],
+//     });
+//   }
+// };
 
 // Handle profile form GET request
-exports.CreateProfile = async function (request, response) {
+// exports.Create = async function (request, response) {
+//     response.render("profile-create", {
+//         title: "Create Profile",
+//         errorMessage: "",
+//         profile: {},
+//     });
+// };
+
+// Handle profile form GET request
+
+exports.CreateProfile = async function (req, res) {
   // instantiate a new Profile Object populated with form data
+  console.log("CREATE POST");
+  // console.log("request.body=== ", req.body, req.files);
+  // console.log("request.body=== ", req.body);
   
+  //if it errors
+  if (1) {
+    const interestsArray = [];
+    for (let c in req.body) {
+      const int = c.substring(0, 3);
+      // console.log("cccccccccc: ", c, int, req.body[c]);
+      if ((int === "int") && (req.body[c]))
+        interestsArray.push(req.body[c]);
+    }
+
+    console.log("interestsArray:: ", interestsArray);
+    return res.render("register", 
+      {
+        title: "ERROR RIGHT!", 
+        profile: {...req.body, interestsArray}, 
+        errorMessage: "ALL GOOD"});
+  }
+
   let responseObj = await _profileActions.createProfile(request.body, request.files);
   
   if (responseObj.errorMsg === "") {

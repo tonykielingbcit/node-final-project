@@ -36,6 +36,7 @@ const profilesRouter = require("./routes/profilesRouter.js");
 const apiProfilesRouter = require("./routes/apiRouter.js");
 const commentsRouter = require("./routes/commentsRouter.js");
 const registerRouter = require("./routes/registerRouter.js");
+const loginRouter = require("./routes/loginRouter.js");
 
 app.use(express.static('public'));
 
@@ -62,6 +63,7 @@ app.use(fileUpload({
 
 // call the routes
 app.use("/register", registerRouter);
+app.use("/login", loginRouter);
 app.use("/profiles", profilesRouter);
 app.use("/api", apiProfilesRouter);
 app.use("/comments", commentsRouter);
