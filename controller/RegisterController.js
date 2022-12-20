@@ -6,14 +6,16 @@ const ProfileActions = require("../data/profilesActions.js");
 // instantiate the class so we can use its methods
 const _profileActions = new ProfileActions();
 
-exports.Index = async function (request, response) {
+exports.Index = async function (req, res) {
+  console.log("--- inside register form CONTROLLER!!!");
   // console.log("REQUEST:::::::::::", request.session);
-  console.log("loading profiles from controller");
-  let profiles = await _profileActions.getAllProfiles();
-  return response.render("profiles", {
-    title: "Express Yourself - Profiles",
-    profiles: profiles.length ? profiles : [],
-  });
+  // console.log("loading profiles from controller");
+  // let profiles = await _profileActions.getAllProfiles();
+  // return response.render("profiles", {
+  //   title: "Express Yourself - Profiles",
+  //   profiles: profiles.length ? profiles : [],
+  // });
+  return res.render("register", {title: "REGISTER TITLE"});
 };
 
 exports.Search = async (req, res) => {

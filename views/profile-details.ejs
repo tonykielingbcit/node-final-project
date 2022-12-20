@@ -3,89 +3,104 @@
 <% if (typeof message !== "undefined") { %>
     <%   msg = message; %>
 <% } %>
+<% console.log("msg = ", profile, "!!!"); %>
 
-<!-- <form 
-    action="/contact"
-    method="post"
-> -->
-    <article class="profile-container">
-        <section class="profile-section">
-            <section class="profile-section1">
-                <div class="details-title-container">
-                    <h2 class="details-h2">Details Profile</h2>
-                    <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
-                </div>
+<article class="profile-container">
+    <section class="profile-section">
+        <section class="profile-section1">
+            <div class="details-title-container">
+                <h2 class="details-h2">Details Profile</h2>
+                <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
+            </div>
 
-                <% if (msg !== "") { %>
-                    <h2 id="message" class="success-message"> <%= msg %> </h2>
-                <% } %>
-    
-                <div class="details-profile-container">
-                    <div 
-                        class="img-container"
-                    >
-                        <h1 class="profile-name"><%= profile.name %></h1>
-                        <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
-                            <h4 class="text-centered">No picture added so far</h4>
+            <% if (msg !== "") { %>
+                <h2 id="message" class="success-message"> <%= msg %> </h2>
+            <% } %>
+
+            <div class="details-profile-container">
+                <div 
+                    class="img-container"
+                >
+                    <h1 class="profile-name"><%= profile.name %></h1>
+                    <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
+                        <h4 class="text-centered">No picture added so far</h4>
+                    <% } else { %>
+                        <img
+                            src="/images/<%=profile.imagePath%>"
+                            alt=""
+                            width="100%"
+                            class="profile-pic"
+                        />
+                    <% } %>
+
+                    <div class="profile-inters">
+                        <h3>Interests</h3>
+                        <% if (profile.interests.length < 1) { %>
+                            <h4 class="text-centered">No interestes added so far</h4>
                         <% } else { %>
-                            <img
-                                src="/images/<%=profile.imagePath%>"
-                                alt=""
-                                width="100%"
-                                class="profile-pic"
-                            />
+                            <ul class="profile-list">
+                                <% for (let i = 0; i < profile.interests.length; i++) { %>
+                                    <li><%= profile.interests[i]%></li>
+                                <% } %>
+                            </ul>
                         <% } %>
-
-                        <div class="profile-inters">
-                            <h3>Interests</h3>
-                            <% if (profile.interests.length < 1) { %>
-                                <h4 class="text-centered">No interestes added so far</h4>
-                            <% } else { %>
-                                <ul class="profile-list">
-                                    <% for (let i = 0; i < profile.interests.length; i++) { %>
-                                        <li><%= profile.interests[i]%></li>
-                                    <% } %>
-                                </ul>
-                            <% } %>
-                        </div>
-                    </div>
-
-                    <div class="comments-container">
-                        <h3>Comments</h3>
-                        <!-- make it a for loop for each comment -->
-                        <div class="individual-comment">
-                            <span>UserX - Dec 17, 2022 - 15:50</span>
-                            <p>
-                                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, 
-                                tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro 
-                                ipsum eos totam hic.
-                            </p>
-                        </div>
-
-                        <div class="individual-comment">
-                            <span id="open-submit-comment-form">
-                                New Comment
-                            </span>
-                            <%- include('./partials/newComments.ejs') %>
-                        </div>
                     </div>
                 </div>
+                
+                <div class="comments-container">
+                    <h3>Comments</h3>
+                    <!-- make it a for loop for each comment -->
+                    <!-- <div class="individual-comment">
+                        <span>UserX - Dec 17, 2022 - 15:50</span>
+                        <p>
+                            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ab, aliquid unde? Fugiat doloribus, 
+                            tenetur dicta sint impedit sequi ab perspiciatis iure neque laborum accusamus sapiente porro 
+                            ipsum eos totam hic.
+                        </p>
 
-            </section>
+                    </div> -->
+                    
+                    <% if (profile.receivedComments && profile.receivedComments.length > 0) { %>
+                        <% for (let k = 0; k < profile.receivedComments.length; k++) { %>
+                            <% const d = new Date(profile.receivedComments[k].datePosted); %>
+                            <% const year = d.getFullYear(); %>
+                            <% const month = d.toLocaleString('default', { month: 'short' }); %>
+                            <% const day = d.getDate(); %>
+                            <% const hour = d.getHours(); %>
+                            <% const minutes = d.getMinutes() > 9 ? d.getMinutes() : `0${d.getMinutes()}`; %>
+                            <% const completeDt = `${month} ${day}, ${year} - ${hour}:${minutes}`; %>
+                            <% const title = `${profile.receivedComments[k].senderName}'s_profile`; %>
+                            <div class="individual-comment">
+                                <span
+                                    title= <%= title %>
+                                >
+                                    <a href="<%= profile._id%>">
+                                        <%= profile.receivedComments[k].senderName %>
+                                    </a> — <%= completeDt %>
+                                </span>
+                                <p>
+                                    <%= profile.receivedComments[k].message %>
+                                </p>
+                            </div>
+                        <% } %>
+                    <% } %>
 
-            <section class="profile-section2">
-                <div class="sideBar-others">
-                    <!-- <%- include(layoutPath) %> -->
-                    <%- include('./layouts/sideBar.ejs') %>
+                    <div class="individual-comment">
+                        <span id="open-submit-comment-form">
+                            New Comment
+                        </span>
+                        <%- include('./partials/newComment.ejs', {profileId: profile._id}) %>
+                    </div>
                 </div>
-            </section>
+            </div>
 
         </section>
-        
-        <!-- <article class="profile-section2">
+
+        <section class="profile-section2">
             <div class="sideBar-others">
-                <%- include(layoutPath) %>
+                <%- include('./layouts/sideBar.ejs') %>
             </div>
-        </article> -->
-    </article>
-<!-- </form> -->
+        </section>
+
+    </section>
+</article>

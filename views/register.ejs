@@ -1,0 +1,63 @@
+<!-- check whether the user is already logged
+if so, redirect them to /home -->
+<link rel="stylesheet" href="/styles/register.css" />
+
+<% let msg = ""; %>
+<% if (typeof errorMessage !== "undefined") { %>
+    <%   msg = errorMessage; %>
+<% } else {  %>
+    <%   msg = ""; %>
+<% } %>
+
+
+<form 
+    action="/register"
+    method="post"
+    enctype="multipart/form-data"
+>
+    <section class="register-container">
+        <h2 class="contact-h2">Create Account</h2>
+        
+        <div class="form-container">
+            <p>Please, fill out the fields below.</p>
+            <input type="text" name="username" id="" class="register-inputs margin-botton" placeholder="Your username"
+                 title="Enter your username" autofocus>
+            <input type="email" name="email" id="" class="register-inputs margin-botton" placeholder="Email" 
+                title="Enter your Email">
+            <input type="password" name="password" id="" class="register-inputs margin-botton" placeholder="Password" 
+                title="Enter your Password">
+            <input type="password" name="confirmPassword" id="" class="register-inputs margin-botton" placeholder="Confirm your password" 
+                title="Confirm your Password">
+            <input type="text" name="firstName" id="" class="register-inputs margin-botton" placeholder="First Name"
+                 title="Enter your First Name">
+            <input type="text" name="lastName" id="" class="register-inputs" placeholder="Last Name"
+                 title="Enter your Last Name">
+            <h2>Interests</h2>
+            <div class="interests-container" id="interests-container">
+                <div class="interests margin-botton" id="interests">
+                    <input type="text" name="int1" id="int1" class="register-inputs">
+                    <button 
+                        id="register-add-button"
+                        title="Add more ineterests"
+                    >+</button>
+                </div>
+            </div>
+            
+            
+            <h2>Add your picture</h2>
+            <input type="file" name="imagePath" accept="image/gif, image/jpeg"/>
+            
+            <h2 id="message" class="error-message"> <%= msg %></h2>
+
+            <input 
+                id="registerButton"
+                type="submit"
+                class="contact-button"
+                title="Click to create your account"
+                value="Register"
+            >
+        </div>
+    </section>
+</form>
+
+<script type="text/javascript" src="/js/code-register.js"></script>

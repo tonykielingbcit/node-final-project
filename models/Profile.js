@@ -1,5 +1,11 @@
 const mongoose = require("mongoose");
 
+const comment = mongoose.Schema({
+  profileId: mongoose.Schema.Types.ObjectId,
+  message: mongoose.Schema.Types.String,
+  datePosted: mongoose.Schema.Types.Date
+});
+
 const profileSchema = mongoose.Schema(
   {
     // MongoDB will automatically create an _id property, so no need to specify it UNLESS we want to create our own
@@ -12,9 +18,13 @@ const profileSchema = mongoose.Schema(
     },
     imagePath: { type: "String"},
     
-
     // interests are optional, so lets just specify that they must be of type Array
     interests: Array,
+
+    // comments received by other Profiles
+    // - it allows to also have sentComments DB field for the case when it is necessary to query all comments sent by someone
+    // ps. not implementing right (sentComments) now because it is not specificied
+    receivedComments: [comment]
   },
   // as a second argument, let's specify the collection we want to work with
   { collection: "profiles" }

@@ -502,7 +502,17 @@ footer {
 .individual-comment:nth-child(odd) > span {
     color: darkred;
 }
-
+.individual-comment > span > a {
+    text-decoration: none;
+    color: inherit;
+}
+.individual-comment > span > a:hover {
+    color: green;
+    background-color: gold;
+    border-radius: 7px;
+    padding: 0 1rem;
+    margin-right: 0.5rem;
+}
 
 
 /* create page*/

@@ -1,11 +1,12 @@
 
-<form 
-    action="/addComment"
-    method="post"
+<section
     id="comment-form"
     class="comment-form"
 >
     <div>
+        <div id="profileId" style="display: none;">
+            <%= profileId %>
+        </div>
         <textarea 
             placeholder="Place your comment"
             class="comment-textarea"
@@ -15,7 +16,6 @@
     </div>
 
     <div class="comment-buttons-container">
-        <!-- <div id="comment-message" class="comment-message-success comment-message-fail" style="border: 2px solid lime;"> -->
         <div id="comment-message">
         </div>
         <button id="comment-after-submit-button" style="display: none;"></button>
@@ -36,4 +36,4 @@
             
         </div>
     </div>
-</form> 
+</section>

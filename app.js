@@ -34,6 +34,8 @@ app.use(cors());
 const indexRouter = require("./routes/indexRouter.js");
 const profilesRouter = require("./routes/profilesRouter.js");
 const apiProfilesRouter = require("./routes/apiRouter.js");
+const commentsRouter = require("./routes/commentsRouter.js");
+const registerRouter = require("./routes/registerRouter.js");
 
 app.use(express.static('public'));
 
@@ -59,8 +61,10 @@ app.use(fileUpload({
   
 
 // call the routes
+app.use("/register", registerRouter);
 app.use("/profiles", profilesRouter);
 app.use("/api", apiProfilesRouter);
+app.use("/comments", commentsRouter);
 app.use(indexRouter);
 
 
