@@ -10,7 +10,7 @@ exports.GetLoginPage = async function (req, res) {
   console.log("--- inside LOGIN form CONTROLLER!!!");
   console.log("LOGIN GEeeeeeeeeeT");
   
-  return res.render("login", {title: "Login", username: ""});
+  return res.render("admission/login", {title: "Login", username: ""});
 };
 
 exports.ProceedLogin = async (req, res) => {
@@ -18,7 +18,7 @@ exports.ProceedLogin = async (req, res) => {
 
   // for login error handling
   if (1) {
-    return res.render("login", {title: "Login", username: req.body.username, errorMessage: "Login is good..."});
+    return res.render("admission/login", {title: "Login", username: req.body.username, errorMessage: "Login is good..."});
   }
 
   const nameToSearch = req.body.searchFor;

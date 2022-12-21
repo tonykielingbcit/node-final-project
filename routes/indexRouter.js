@@ -11,22 +11,28 @@ indexRouter.get("/about", (req, res) => res.render("about", {
     title: "Express Yourself - About",
 }));
 
-indexRouter.get("/contact", (req, res) => res.render("contact", {
-    title: "Express Yourself - Contact",
-}));
+// indexRouter.get("/contact", (req, res) => res.render("contact", {
+//     title: "Express Yourself - Contact",
+// }));
 
-indexRouter.get("*", (req, res) => res.status(404).render("error", { 
-    title: "Express Yourself - Error",
-    errorMessage: "No page has been found."
-}));
+indexRouter.get("*", (req, res) => {
+    const addressError = `"${req.protocol}://${req.get('host')}${req.originalUrl}" is not a valid address in our system.`
+    return res.status(404)
+        .render("error", { 
+            title: "Express Yourself - Error",
+            errorMessage: "No page has been found.",
+            addressError
+        });
+    }
+);
 
 
-// POST method route
-indexRouter.post("/contact", (req, res) => {
-    res.render("contact", {
-        title: "Express Yourself - Contact",
-        message: "We've received your message. Thank you!"
-    });
-});
+// // POST method route
+// indexRouter.post("/contact", (req, res) => {
+//     res.render("contact", {
+//         title: "Express Yourself - Contact",
+//         message: "We've received your message. Thank you!"
+//     });
+// });
 
 module.exports = indexRouter;

@@ -24,6 +24,7 @@ class ProfileOps {
     if (gettingName) {
       // it gets the current name for each sender comments Profile
       const receivedCommentsWithName = await profile.receivedComments.map(async e => {
+        console.log("---------------- temp: ", e);
         const temp = await this.getProfileById(e.profileId);
         return ({
             senderName: temp.name,

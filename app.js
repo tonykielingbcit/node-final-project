@@ -33,7 +33,7 @@ app.use(cors());
 // get the routes
 const indexRouter = require("./routes/indexRouter.js");
 const profilesRouter = require("./routes/profilesRouter.js");
-const apiProfilesRouter = require("./routes/apiRouter.js");
+// const apiProfilesRouter = require("./routes/apiRouter.js");
 const commentsRouter = require("./routes/commentsRouter.js");
 const registerRouter = require("./routes/registerRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
@@ -65,13 +65,14 @@ app.use(fileUpload({
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/profiles", profilesRouter);
-app.use("/api", apiProfilesRouter);
 app.use("/comments", commentsRouter);
+// app.use("/api", apiProfilesRouter);
 app.use(indexRouter);
 
-
+// this is a just in case default route - it is not supposed to be reached
 app.get("*", (req, res) => res.status(404)
-                            .send("<h2 style='text-align: center; color: red; margin-top: 2rem;'>No page has been found</h2>"));
+            .send("<h2 style='text-align: center; color: red; margin-top: 2rem;'>No page has been found</h2>")
+);
 
 // app is listening
 app.listen(PORT, () => {

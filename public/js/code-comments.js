@@ -1,22 +1,22 @@
 "use strict"
 
-const submitBt = document.getElementById("submitButton");
-const txtArea = document.getElementById("txtArea");
-const message = document.getElementById("message");
-let changesOnTxtArea = false;
+// const submitBt = document.getElementById("submitButton");
+// const txtArea = document.getElementById("txtArea");
+// const message = document.getElementById("message");
+// let changesOnTxtArea = false;
 
-txtArea && txtArea.addEventListener("input", _ => changesOnTxtArea = true );
+// txtArea && txtArea.addEventListener("input", _ => changesOnTxtArea = true );
 
-// contact message
-submitBt && submitBt.addEventListener("click", e => {
-    if (!changesOnTxtArea)  {
-        e.preventDefault();
-        txtArea.style.border = "4px solid red";
-        message.textContent = "Please, type something.";
-        message.style.color = "red";
-        txtArea.focus();
-    }
-});
+// // contact message
+// submitBt && submitBt.addEventListener("click", e => {
+//     if (!changesOnTxtArea)  {
+//         e.preventDefault();
+//         txtArea.style.border = "4px solid red";
+//         message.textContent = "Please, type something.";
+//         message.style.color = "red";
+//         txtArea.focus();
+//     }
+// });
 
 
 // handling comment messages
@@ -27,11 +27,13 @@ openSubmitComment && openSubmitComment.addEventListener("click", e => {
     document.getElementById("comment-textarea").focus();
 });
 
+
 const cancelCommentButton = document.getElementById("comment-cancel");
 cancelCommentButton && cancelCommentButton.addEventListener("click", e => {
     e.preventDefault();
     document.getElementById("comment-form").style.display = "none";
 });
+
 
 const submitCommentButton = document.getElementById("comment-submit");
 submitCommentButton && submitCommentButton.addEventListener("click", async e => {
@@ -67,12 +69,12 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
             };
             console.log("data:::::::::", data);
             const sendComment = await fetch("/comments/create", {
-                method: "POST",
-                headers: {'Content-Type': 'application/json'}, 
-                body: JSON.stringify(data)
-            })
-            .then(res => res.json())
-            .then(data => data); //console.log("Request complete! response:", data));
+                    method: "POST",
+                    headers: {'Content-Type': 'application/json'}, 
+                    body: JSON.stringify(data)
+                })
+                .then(res => res.json())
+                .then(data => data);
 
             console.log("sendComment::: ", sendComment);
             // if success
@@ -101,7 +103,7 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
             commentMessage.innerHTML = MESSAGE_FAIL;
             commentText.style.backgroundColor = "lightcoral";
             commentMessage.classList.add("comment-message-fail");
-            const tryAgainButton = document.getElementById("comment-after-submit-button");
+            // const tryAgainButton = document.getElementById("comment-after-submit-button");
             // console.log("tryAgainButton= ", tryAgainButton);
             afterButton.style.display = "block";
             afterButton.style.margin = "auto";
@@ -109,6 +111,7 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
         }
     }
 });
+
 
 const commentAfterSubmitButton = document.getElementById("comment-after-submit-button");
 commentAfterSubmitButton && commentAfterSubmitButton.addEventListener("click", e => {

@@ -10,7 +10,7 @@ exports.Create = async function (req, res) {
   console.log("--- inside register form CONTROLLER!!!");
   console.log("CREATE GEeeeeeeeeeT");
   
-  return res.render("register", {title: "REGISTER TITLE", profile: {}});
+  return res.render("admission/register", {title: "REGISTER TITLE", profile: {}});
 };
 
 exports.Search = async (req, res) => {
@@ -76,7 +76,7 @@ exports.CreateProfile = async function (req, res) {
     }
 
     console.log("interestsArray:: ", interestsArray);
-    return res.render("register", 
+    return res.render("admission/register", 
       {
         title: "ERROR RIGHT!", 
         profile: {...req.body, interestsArray}, 
