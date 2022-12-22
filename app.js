@@ -95,6 +95,9 @@ passport.deserializeUser(Profile.deserializeUser());
 /***************************************************************/
 /**************** USING THE ROUTES *****************************/
 /***************************************************************/
+const checkAuths = require("./services/checkAuths.js");
+app.use(checkAuths);  // it checks authentication and authorization
+
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/profiles", profilesRouter);

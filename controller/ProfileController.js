@@ -7,13 +7,15 @@ const sendError = require("../services/sendError.js");
 // instantiate the class so we can use its methods
 const _profileActions = new ProfileActions();
 
-exports.Index = async function (request, response) {
+exports.Index = async function (req, res) {
   // console.log("REQUEST:::::::::::", request.session);
-  console.log("loading profiles from controller");
+  console.log("loading profiles from controller ", req.isLogged, req.profile, req.roles);
   let profiles = await _profileActions.getAllProfiles();
-  return response.render("profiles", {
+  return res.render("profiles", {
     title: "Express Yourself - Profiles",
     profiles: profiles.length ? profiles : [],
+    isLogged: req.isLogged,
+    profile: req.profile
   });
 };
 
@@ -41,20 +43,21 @@ exports.Detail = async function (req, res) {
   
     let profiles = await _profileActions.getAllProfiles();
     profiles = profiles.filter(e => e._id.toString() !== profileId);
-  
-    if (profile) {
-      res.render("profile-details", {
+  console.log("DETAILLLLLLLLLLLLLLLLL: ", req.isLogged);;
+    // if (profile) {
+      return res.render("profile-details", {
         title: "Express Yourself - " + profile.name,
         profiles,
         profile,
+        isLogged: req.isLogged,
         layoutPath: "./layouts/sideBar.ejs"
       });
-    } else {
-      res.render("profiles", {
-        title: "Express Yourself - Profiles",
-        profiles: [],
-      });
-    }
+    // } else {
+    //   res.render("profiles", {
+    //     title: "Express Yourself - Profiles",
+    //     profiles: [],
+    //   });
+    // }
   } catch (err) {
     console.log("#Error on Detail", err.message || err);
     // return response.render("error", { title: "Error" });

@@ -1,8 +1,13 @@
 <% let msg = ""; %>
 <% if (hasOwnProperty("message")) { msg = message; } else { msg = "no message so far.."; } %>
 
+<% let displayName = "there"; %>
+<% if (typeof profile !== "undefined" && profile !== {} && profile !== "") { %>
+    <% displayName = profile.firstName; %>
+<% } %>
+<%# console.log("index page::::::::::: ", profile); %>
 <section class="index-page">
-    <p>Hello there and welcome!</p>
+    <p>Hello <%= displayName %> and welcome!</p>
     <p class="index-h2">This is our INDEX/HOME page</p>
     <p style="color: red;">Message of the day is "<%= msg %>"</p>
 </section>

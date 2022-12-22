@@ -7,6 +7,8 @@ module.exports = async (req, res, next) => {
 
     if (req.isAuthenticated()) {
 console.log("permition YESSSSSSS");
+        req.isLogged = true;
+        req.roles = req.body.roles
         next();
     } else {
         console.log("no permissionnnnnnnnnnn");

@@ -1,9 +1,34 @@
+<link rel="stylesheet" href="/styles/header.css" />
+
+<%# const localProfile = {}; %>
+<%# profile._id = "tk"; %>
+<%# profile.firstName = "Tony"; %>
+
+<%# let allowed = false; %>
+<%# if (typeof isLogged !== "undefined" && isLogged) { %>
+  <%# allowed = true; %>
+<%# } %>
+<% console.log("allowed:: ", typeof isLogged !== "undefined"); %>
 
 <header>
   <nav class="menu">
-     <a href="/" class="menu-items">Home</a>
-     <a href="/profiles" class="menu-items">Profiles</a>
-     <a href="/contact" class="menu-items">Contact</a>
-     <a href="/about" class="menu-items">About</a>
+    <div class="menu-left">
+      <a href="/" class="menu-items">Home</a>
+      <% if (typeof isLogged !== "undefined" && isLogged) { %>
+        <a href=<%= `/profiles/${profile._id}` %> class="menu-items" title="My profile"><%= profile.firstName %></a>
+        <a href="/profiles" class="menu-items" title="List of profiles connected to me">Profiles</a>
+      <% } else { %>
+        <a href="/register" class="menu-items" title="Sign up">Register</a>
+        <a href="/login" class="menu-items" title="Sign in">Login</a>
+        <%# console.log("yeeeeeea"); %>
+      <% } %>
+    </div>
+    <div class="menu-right">
+      <!-- <a href="/contact" class="menu-items">Contact</a> -->
+      <% if (typeof isLogged !== "undefined" && isLogged) { %>
+        <a href="/profiles" class="menu-items" title="It closes your session">Logout</a>
+      <% } %>
+      <a href="/about" class="menu-items">About</a>
+    </div>
   </nav>
 </header>

@@ -3,16 +3,17 @@
 const path = require("path");
 const passport = require("passport");
 const Profile = require("../models/Profile.js");
-const RequestService = require("../services/RequestService");
+// const RequestService = require("../services/RequestService");
+const checkAuths = require("../services/checkAuths.js");
 
 // const ProfileActions = require("../data/profilesActions.js");
 // instantiate the class so we can use its methods
 // const _profileActions = new ProfileActions();
 
 exports.GetRegisterPage = async function (req, res) {
-  console.log("--- inside register form CONTROLLER!!!");
-  console.log("CREATE GEeeeeeeeeeT");
-  
+  if (req.isLogged)
+    return res.redirect("/");
+
   return res.render("admission/register", {title: "REGISTER TITLE", profile: {}});
 };
 
@@ -98,18 +99,19 @@ console.log("REGISTER------------------------------------");
       function (err, account) {
           // Show registration form with errors if fail.
           if (err) {
-              const reqInfo = RequestService.reqHelper(req);
+              // const reqInfo = RequestService.reqHelper(req);
+              // const auth = checkAuths(req);
           
               return res.render("admission/register", {
                   title: "Register - error",
-                  profile: tempProfile,
+                  profile,
                   errorMessage: err.message || err,
-                  reqInfo: reqInfo,
+                  // reqInfo: reqInfo,
               });
           }
 
           // User registered so authenticate and redirect to secure area
-          passport.authenticate("local")(req, res, () => res.redirect("/secure/secure-area"));
+          passport.authenticate("local")(req, res, () => res.redirect("/"));
       }
     );
 

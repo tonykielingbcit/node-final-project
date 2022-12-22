@@ -1,20 +1,20 @@
 
 <section class="profiles-page">
-    <h1><%= title %></h1> 
-    <h4><a href="/profiles/create">Create a New Profile</a></h4>
+    <!-- <h1><%= title %></h1> 
+    <h4><a href="/profiles/create">Create a New Profile</a></h4> -->
 
     <%- include('./layouts/search.ejs') %>
 
     <div class="profiles-list-table">
         <table>
             <tr>
-                <th>Name</th>
+                <th>My connections</th>
                 <th></th>
             </tr>
             <% for (let i = 0; i < profiles.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].name%></a>
+                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].lastName %>, <%= profiles[i].firstName%></a>
                     </td>
                     <td class="profiles-list-table-buttons">
                         <a href="/profiles/edit/<%= profiles[i].id %>"><button>Edit</button></a>
