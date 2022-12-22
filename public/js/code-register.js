@@ -79,3 +79,7 @@ registerButton && registerButton.addEventListener("click", e => {
 
 });
 
+// const imagePath = document.getElementById("image-path");
+// imagePath && document.onload(e => {
+//     console.log("loading register...........................");
+// });

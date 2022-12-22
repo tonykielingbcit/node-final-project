@@ -41,8 +41,10 @@
 .error-message-none {
     display: none;
 }
-.error-message-yes {
+/* .error-message-yes { */
+.error-message {
     background-color: lightcoral;
+    color: maroon;
     display: block;
     min-width: 70%;
     padding: 0.5rem;

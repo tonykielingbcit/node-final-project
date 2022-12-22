@@ -3,6 +3,7 @@
 // const Profile = require("../models/Profile.js");
 
 const ProfileActions = require("../data/profilesActions.js");
+const sendError = require("../services/sendError.js");
 // instantiate the class so we can use its methods
 const _profileActions = new ProfileActions();
 
@@ -28,64 +29,79 @@ exports.Search = async (req, res) => {
       });
 }
 
-exports.Detail = async function (request, response) {
-  const profileId = request.params.id;
-  console.log(`loading single profile by id ${profileId}`);
-  let profile = await _profileActions.getProfileById(profileId, true);
+// exports.Login = async (req, res) => {
+//   return res.render("admission/login");
+// }
 
-  let profiles = await _profileActions.getAllProfiles();
-  profiles = profiles.filter(e => e._id.toString() !== profileId);
-
-  if (profile) {
-    response.render("profile-details", {
-      title: "Express Yourself - " + profile.name,
-      profiles,
-      profile,
-      layoutPath: "./layouts/sideBar.ejs"
-    });
-  } else {
-    response.render("profiles", {
-      title: "Express Yourself - Profiles",
-      profiles: [],
-    });
-  }
-};
-
-// Handle profile form GET request
-exports.Create = async function (request, response) {
-    response.render("profile-create", {
-        title: "Create Profile",
-        errorMessage: "",
-        profile: {},
-    });
-};
-
-// Handle profile form GET request
-exports.CreateProfile = async function (request, response) {
-  // instantiate a new Profile Object populated with form data
+exports.Detail = async function (req, res) {
+  try {
+    const profileId = req.params.id;
+    console.log(`loading single profile by id ${profileId}`);
+    let profile = await _profileActions.getProfileById(profileId, true);
   
-  let responseObj = await _profileActions.createProfile(request.body, request.files);
-  
-  if (responseObj.errorMsg === "") {
     let profiles = await _profileActions.getAllProfiles();
-    profiles = profiles.filter(e => e._id.toString() !== responseObj.obj._id.toString());
-
-    response.render("profile-details", {
-      title: "Express Yourself - " + responseObj.obj.name,
-      profile: responseObj.obj,
-      profiles,
-      layoutPath: "./layouts/sideBar.ejs",
-      message: "Profile created successfully! \\o/"
-    });
+    profiles = profiles.filter(e => e._id.toString() !== profileId);
+  
+    if (profile) {
+      res.render("profile-details", {
+        title: "Express Yourself - " + profile.name,
+        profiles,
+        profile,
+        layoutPath: "./layouts/sideBar.ejs"
+      });
+    } else {
+      res.render("profiles", {
+        title: "Express Yourself - Profiles",
+        profiles: [],
+      });
+    }
+  } catch (err) {
+    console.log("#Error on Detail", err.message || err);
+    // return response.render("error", { title: "Error" });
+    sendError(req, res, (err.message || err));
   }
-  // There are errors. Show form the again with an error message.
-  else {
-    console.log("XXXAn error occured. Item not created.");
-    response.render("profile-create", {
+};
+
+// Handle profile form GET request
+exports.Create = async function (req, res) {
+    res.render("admission/register", {
       title: "Create Profile",
-      profile: responseObj.obj,
-      errorMessage: responseObj.errorMsg,
-    });
+      errorMessage: "",
+      profile: {}
+  });
+};
+
+// Handle profile form GET request
+exports.CreateProfile = async function (req, res) {
+  // instantiate a new Profile Object populated with form data
+  try {
+    let responseObj = await _profileActions.createProfile(req.body, req.files);
+console.log("------responseObj::: ", responseObj);
+    if (responseObj.errorMsg === "") {
+      // let profiles = await _profileActions.getAllProfiles(); ////////////////
+      profiles = profiles.filter(e => e._id.toString() !== responseObj.obj._id.toString());
+  
+      return res.render("profile-details", {
+        title: "Express Yourself - " + responseObj.obj.name,
+        profile: responseObj.obj,
+        profiles,
+        layoutPath: "./layouts/sideBar.ejs",
+        message: "Profile created successfully! \\o/"
+      });
+    }
+    // There are errors. Show form the again with an error message.
+    else {
+      // console.log("XXXAn error occured. Item not created.");
+      return res.render("admission/register", {
+        title: "Create Profile",
+        profile: responseObj.profile,
+        imagePath: responseObj.imagePath,
+        errorMessage: responseObj.errorMsg
+      });
+    }
+  } catch(err) {
+    console.error("###Error on CreateProfile: ", err.message || err);
+    sendError(req, res, (err.message || err));
   }
 };
 

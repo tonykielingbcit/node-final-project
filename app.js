@@ -1,16 +1,15 @@
 "use strict"
 
-// connects to the DB
+/***************************************************************/
+/**************** DB CONNECTION ********************************/
+/***************************************************************/
 require("./db/connect.js");
 
-/*
-
-how's the Model relates to the db connection
-
-*/
 
 
-
+/***************************************************************/
+/**************** REQUIREMENTS *********************************/
+/***************************************************************/
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
@@ -19,24 +18,32 @@ const path = require("path");
 const expressLayouts = require("express-ejs-layouts");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 
-// Use environment variable if defined, or a fixed value if not.
-const PORT = process.env.PORT || 3003;
 
-// morgan is set ON
-// app.use(logger("combined"));
-
-app.use(cors());
-
-
-// get the routes
+/***************************************************************/
+/**************** GETTING THE ROUTES ***************************/
+/***************************************************************/
 const indexRouter = require("./routes/indexRouter.js");
 const profilesRouter = require("./routes/profilesRouter.js");
 // const apiProfilesRouter = require("./routes/apiRouter.js");
 const commentsRouter = require("./routes/commentsRouter.js");
 const registerRouter = require("./routes/registerRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
+
+
+
+/***************************************************************/
+/**************** SETTINGS *************************************/
+/***************************************************************/
+// Use environment variable if defined, or a fixed value if not.
+const PORT = process.env.PORT || 3003;
+// morgan is set ON
+// app.use(logger("combined"));
+
+app.use(cors());
 
 app.use(express.static('public'));
 
@@ -59,9 +66,35 @@ app.use(fileUpload({
     createParentPath: true,
   })
 );
-  
 
-// call the routes
+
+
+/***************************************************************/
+/**************** SETTINGS FOR ADMISSION PROCESSES *************/
+/***************************************************************/
+// Set up session management
+app.use(
+  require("express-session")({
+    // secret: "a long time ago in a galaxy far far away",
+    secret: process.env.secret,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+// Initialize passport and configure for User model
+app.use(passport.initialize());
+app.use(passport.session());
+const Profile = require("./models/Profile.js");
+passport.use(new LocalStrategy(Profile.authenticate()));
+passport.serializeUser(Profile.serializeUser());
+passport.deserializeUser(Profile.deserializeUser());
+
+
+
+/***************************************************************/
+/**************** USING THE ROUTES *****************************/
+/***************************************************************/
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/profiles", profilesRouter);
@@ -74,7 +107,11 @@ app.get("*", (req, res) => res.status(404)
             .send("<h2 style='text-align: center; color: red; margin-top: 2rem;'>No page has been found</h2>")
 );
 
-// app is listening
+
+
+/***************************************************************/
+/**************** APP RUNNING **********************************/
+/***************************************************************/
 app.listen(PORT, () => {
     console.log(` => Server running at http://localhost:${PORT}`);
 });

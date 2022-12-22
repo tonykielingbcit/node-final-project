@@ -3,9 +3,9 @@ const registerRouter = express.Router();
 
 const registerController = require("../controller/RegisterController.js");
 
-registerRouter.get("/", registerController.Create);
+registerRouter.get("/", registerController.GetRegisterPage);
 
-registerRouter.post("/", registerController.CreateProfile);
+registerRouter.post("/", registerController.ProceedRegister);
 
 
 module.exports = registerRouter;

@@ -1,6 +1,15 @@
+<% let emsg = "something bad happenned"; %>
+<% if (typeof errorMessage !== "undefined") { %>
+    <%   emsg = errorMessage; %>
+<% } %>
+
+<% let aerror = ""; %>
+<% if (typeof addressError !== "undefined") { %>
+    <%   aerror = addressError; %>
+<% } %>
 
 <section class="error-page">
     <h1>Sorry :(</h1>
-    <h2><%= errorMessage %></h2>
-    <p><%= addressError %></p>
+    <h2><%= emsg %></h2>
+    <p><%= aerror %></p>
 </section>

@@ -37,8 +37,8 @@ cancelCommentButton && cancelCommentButton.addEventListener("click", e => {
 
 const submitCommentButton = document.getElementById("comment-submit");
 submitCommentButton && submitCommentButton.addEventListener("click", async e => {
-    const MESSAGE_SUCCESS = "Message has been sent.";
-    const MESSAGE_FAIL = "Message failed. Sorry!";
+    const MESSAGE_SUCCESS = "Comment has been sent.";
+    const MESSAGE_FAIL = "Comment failed. Sorry!";
     const commentText = document.getElementById("comment-textarea");
     const comment = commentText.value.trim();
     console.log("comment= ", comment);

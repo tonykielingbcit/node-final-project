@@ -3,11 +3,8 @@ if so, redirect them to /home -->
 <link rel="stylesheet" href="/styles/register.css" />
 
 <% let msg = ""; %>
-<% let errorClass = "error-message-none"; %>
 <% if (typeof errorMessage !== "undefined") { %>
     <% msg = errorMessage; %>
-    <% errorClass = "error-message-yes"; %>
-    <% console.log("profile on EJS === ", username); %>
 <% } %>
 <% console.log("msg= ", msg); %>
 
@@ -21,11 +18,13 @@ if so, redirect them to /home -->
         <div class="form-container">
 
             <input type="text" name="username" class="register-inputs margin-botton" placeholder="Your username"
-                 title="Enter your username" value="<%= username %>" id="username" autofocus>
+                 title="Enter your username" value="<%= username || '' %>" id="username" autofocus>
             <input type="password" name="password" class="register-inputs margin-botton" placeholder="Password" 
                 title="Enter your Password" id="password">
             
-            <h2 id="message" class="<%= errorClass %>"> <%= msg %> </h2>
+            <% if (msg) { %>
+                <h2 id="message" class="error-message"> <%= msg %> </h2>
+            <% } %>
 
             <input 
                 id="loginButton"

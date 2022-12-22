@@ -53,59 +53,119 @@ class ProfileOps {
 
 
   async createProfile(input, img) {
-    try {
-      const { name } = input;
-      const { imagePath } = img || {};
+    // it arranges int(x) HTML fields into an array
+    const interests = [];
+    for(let item in input)
+      if (item.includes("int") && (input[item].trim().length > 0))
+        interests.push(input[item].trim());
 
-      const interests = [];
-      for(let item in input)
-        if (item.includes("int") && (input[item].length > 0))
-          interests.push(input[item]);
+    try {
+      // console.log("this.createProfile: ", input);
+      // if(1) return ({obj: input, errorMsg: "rrrrrrrrrr"});
+
+      // const { name } = input;
+      const { username, email, password, confirmPassword, firstName, lastName } = input;
+      const { imagePath } = img || {};
+      const profile = {...input, interests };
+
+  // console.log("---coming data::: ", username, email, password, confirmPassword, firstName, lastName);
+  //     console.log("interests:: ", interests, imagePath);
+      if (!1) {
+        // let profiles = await _profileActions.getAllProfiles(); ////////////////
+
+        return (
+          {
+            profile,
+            errorMsg: "ALL GOOD"
+          }
+        );
+      }
+
+      if (password !== confirmPassword) // it is been done in fronte and now back end, as well
+        return ({
+            profile,
+            errorMsg: "Passwords MUST match, please"
+          });
 
       let tempProfileObj = new Profile({
-        name,
+        username,
+        email,
+        firstName,
+        lastName,
         imagePath: (imagePath && imagePath.name) || undefined,
         interests
       });
 
-      const error = await tempProfileObj.validateSync();
+      const error = tempProfileObj.validateSync();
 
       if (error) {
         console.log("XXX Model is not valid!");
-        const response = {
-          obj: input,
-          errorMessage: error
+        return {
+          profile,
+          errorMsg: error
         };
-        return response; // Exit if the model is invalid
       }
 
       // Model is valid, so save it
       if (imagePath) {
         const recordImgAt = path.join(__dirname, "..", "public", "images", imagePath.name);
         await imagePath.mv(recordImgAt, (err) => {
-          if (err) {
+          if (err)
             return({
-              obj: input,
-              errorMessage: err
-            })
-          }
+              profile,
+              errorMsg: err
+            });
         });
       }
       
-      // save data on DB
-      const result = await tempProfileObj.save();
-      const response = {
-        obj: result,
-        errorMsg: "",
-      };
+      // // save data on DB
+      // const result = await tempProfileObj.save();
+      // const response = {
+      //   profile: result,
+      //   errorMsg: "",
+      // };
+      const response = Profile.register(
+        new Profile(tempProfileObj),
+        password,
+        (err, user, info) => {
+          if (err)
+            return false;
+          else {
+console.log("================= ", user, info);
+            return user
+          }
+        }
+      );
+        // function async (err, success) {
+        //     // Show registration form with errors if fail.
+        //     if (err)
+        //       return({
+        //         profile,
+        //         errorMsg: err.message || err || "We are facing technical issues. Sorry."
+        //       })
+// console.log("SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
+            // // User registered so authenticate and redirect to secure area
+            // // passport.authenticate("local")(req, res, () => res.redirect("/secure/secure-area"));
+            // return passport.authenticate("local", { 
+            //     successRedirect : "/secure/secure-area", 
+            //     failureFlash : true
+            //   }),
+            //   function() {
+            //     return ({
+            //         profile: {...input, interests},
+            //         errorMsg: "ALL GOOD"
+            //       });
+            //   }
+        
+console.log("8888888888888888888888888888888888888888888888888888888888888888888888888888888888", response);
       return response;
 
-    } catch (error) {
-      const response = {
-        errorMsg: error.message,
-        obj: input
-      };
-      return response;
+    } catch (err) {
+      console.error("###ERROR on ProfileActions.Create", err.message || err);
+      return ({
+        errorMsg: err.message || err || "###ERROR on ProfileActions.Create",
+        profile: {input, ...interests}
+      });
     }
   }
 
