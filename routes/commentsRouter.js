@@ -1,13 +1,15 @@
 "use strict"
 
 // const path = require("path");
-const Profile = require("../models/Profile.js");
+// const Profile = require("../models/Profile.js");
 
 const express = require("express");
 const commentsRouter = express.Router();
+const commentsController = require("../controller/CommentController");
 
+commentsRouter.post("/create", commentsController.CreateComment);
 
-// GET method routes
+/*
 commentsRouter.post("/create", async (req, res) => {
     // console.log("-------- CREATE COMMENT::::: req.body", req.body, req.profile);
     // req.body contains who is receiving the comment
@@ -70,5 +72,6 @@ commentsRouter.post("/create", async (req, res) => {
         });
     }
 });
+*/
 
 module.exports = commentsRouter;

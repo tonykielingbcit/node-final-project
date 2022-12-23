@@ -7,12 +7,12 @@ tr:nth-child(even) {
     background-color: lightblue;
 }
 tr:nth-child(odd) {
-    background-color: lightsalmon;
+    background-color: lightgreen;
 }
 
 th {
     min-width: 7rem;
-    background-color: lightslategray;
+    background-color: lightseagreen;
 }
 
 td {

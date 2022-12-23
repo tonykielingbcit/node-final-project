@@ -3,29 +3,27 @@
 // this middleware checks whether the user is authenticated
 // if so, it also provides profile and authorization info
 module.exports = async (req, res, next) => {
-    console.log("checking.......... ", req.isAuthenticated());
+    // console.log("checking.......... ", req.isAuthenticated());
     // , req.user, req.body);
 
     if (req.isAuthenticated()) {
-console.log("permition YESSSSSSS, req.body:::::: ", req.body);
+// console.log("permition YESSSSSSS, req.body:::::: ", req.body);
         req.isLogged = true;
-        const { _id, username, email, firstName, lastName, interests, receivedComments } = req.user;
+        const { _id, username, email, firstName, lastName, roles } = req.user;
         const profile = {
             _id,
             username,
             email,
             firstName, 
-            lastName, 
-            // interests, // do not need these two for now
-            // receivedComments
+            lastName,
+            roles
         };
         
-        req.roles = req.user.roles;
+        req.roles = roles;
         req.profile = profile;
     } else {
-        console.log("no permissionnnnnnnnnnn");
+        // console.log("no permissionnnnnnnnnnn");
         req.isLogged = false;
-        // return res.render("noPermission");
     }
     next();
 }

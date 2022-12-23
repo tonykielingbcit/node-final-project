@@ -3,11 +3,19 @@
 <% if (typeof message !== "undefined") { %>
     <%   msg = message; %>
 <% } %>
+<%# console.log("1=============msg = PROFILE: ", profile, " VISITINGTO: ", visitingTo, "!!!"); %>
 
+<%# console.log("222222=============msg PROFILE = ", profile._id.toString(), visitingTo._id.toString(), (profile._id || visitingTo._id), "!!!"); %>
+<% let isAllowed = false; %>
+<% if ((profile._id.toString() === visitingTo._id.toString()) || (profile.roles.isManager) || (profile.roles.isAdmin)) { %>
+    <% isAllowed = true; %>
+<% } %>
+
+<%# console.log("333============= isAllowed = ", isAllowed, "!!!"); %>
+    
 <% if (typeof visitingTo !== "undefined") { %>
     <% profile = visitingTo; %>
 <% } %>
-<%# console.log("=============msg = ", profile, visitingTo, "!!!"); %>
 
 <article class="profile-container">
     <section class="profile-section">
@@ -15,7 +23,9 @@
             <div class="details-title-container">
                 <h2 class="details-h2"><%= profile.firstName %></h2>
                 <!-- check if is manager or admin - it has to be allowed only if that is true-->
-                <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
+                <% if (isAllowed) { %>
+                    <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
+                <% } %>
             </div>
 
             <% if (msg !== "") { %>

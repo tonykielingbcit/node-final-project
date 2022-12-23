@@ -76,9 +76,9 @@ app.use(fileUpload({
 // Set up session management
 app.use(
   require("express-session")({
-    // secret: "a long time ago in a galaxy far far away",
     secret: process.env.secret,
-    resave: false,
+    resave: true, // session renew is ON
+    cookie: {_expires : 1000 * 60 * 20}, // 20 minutes session
     saveUninitialized: false,
   })
 );
@@ -104,7 +104,7 @@ app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/profiles", protecRoute, profilesRouter);
-app.use("/comments", commentsRouter);
+app.use("/comments", protecRoute, commentsRouter);
 // app.use("/api", apiProfilesRouter);
 app.use(indexRouter);
 

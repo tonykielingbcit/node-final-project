@@ -10,9 +10,11 @@ const _profileActions = new ProfileActions();
 
 exports.Index = async function (req, res) {
   // console.log("REQUEST:::::::::::", request.session);
-  console.log("loading profiles from controller ", req.isLogged, req.profile, req.roles);
+  console.log("loading profiles from controller ", req.isLogged, req.profile);
     
   let profiles = await _profileActions.getAllProfiles();
+  profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
+
   return res.render("profiles", {
     title: "Express Yourself - Profiles",
     profiles: profiles.length ? profiles : [],
