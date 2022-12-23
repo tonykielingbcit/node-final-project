@@ -1,5 +1,3 @@
-<!-- check whether the user is already logged
-if so, redirect them to /home -->
 <link rel="stylesheet" href="/styles/register.css" />
 
 <% let msg = ""; %>
@@ -20,7 +18,6 @@ if so, redirect them to /home -->
         <h2 class="contact-h2">Create Account</h2>
         
         <div class="form-container">
-            <p>Please, fill out the fields below.</p>
             <input type="text" name="username" class="register-inputs margin-botton" placeholder="Your username"
                  title="Enter your username" value="<%= (profile && profile.username) || ''%>" autofocus id="username">
             <input type="email" name="email" class="register-inputs margin-botton" placeholder="Email" 

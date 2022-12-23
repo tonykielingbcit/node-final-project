@@ -1,7 +1,8 @@
 
+<link rel="stylesheet" href="/styles/search.css" />
+
+
 <section class="profiles-page">
-    <h1><%= title %></h1> 
-    <h4><a href="/profiles/create">Create a New Profile</a></h4>
 
     <%- include('./layouts/search.ejs') %>
 
@@ -11,19 +12,38 @@
         <table>
             <% if (profiles.length > 0) { %>
                 <tr>
-                    <th>Name</th>
+                    <th>Last Name</th>
+                    <th>First Name</th>
+                    <th>Email</th>
+                    <th>Username</th>
                     <th></th>
                 </tr>
                 <% for (let i = 0; i < profiles.length; i++) { %>
-                    <tr>
-                        <td>
-                            <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].name%></a>
-                        </td>
-                        <td class="profiles-list-table-buttons">
-                            <a href="/profiles/edit/<%= profiles[i].id %>"><button>Edit</button></a>
-                            <a href="/profiles/delete/<%=profiles[i].id%>"><button>Delete</button></a>
-                        </td>
-                    </tr>
+                    <a href="../profiles/<%= profiles[i].id %>">
+                        <tr>
+                            <td>
+                                <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].lastName %></a>
+                            </td>
+                            <td>
+                                <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].firstName %></a>
+                            </td>
+                            <td>
+                                <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].email %></a>
+                            </td>
+                            <td>
+                                <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].username %></a>
+                            </td>
+                            <td 
+                                <!-- class="profiles-list-table-buttons" -->
+                                <a href="/profiles/edit/<%= profiles[i].id %>">
+                                    <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
+                                </a>
+                                <a href="/profiles/delete/<%= profiles[i].id %>">
+                                    <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
+                                </a>
+                            </td>
+                        </tr>
+                    </a>
                 <% } %>
             <% } else { %>
                 <h3><%= message %></h3>

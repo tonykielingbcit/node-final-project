@@ -41,7 +41,7 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
     const MESSAGE_FAIL = "Comment failed. Sorry!";
     const commentText = document.getElementById("comment-textarea");
     const comment = commentText.value.trim();
-    console.log("comment= ", comment);
+    console.log("comment= ", comment, window.location);
     if (!comment) {
         e.preventDefault();
         commentText.focus();

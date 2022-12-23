@@ -1,17 +1,25 @@
+<link rel="stylesheet" href="/styles/search.css" />
 
 <form
     action="/profiles/search"
     method="post"
 >
-    <span class="search-name-label">Search for: </span>
-    <input 
-        id="" 
-        type="text" 
-        name="searchFor" 
-        title="It searches for any word" 
-        placeholder="names, email or interests">
-    <input type="submit" value="Search">
-    <% if (typeof showReturn !== "undefined") { %>
-        <span><a href="/profiles/" class="details-edit-bt">Return to full list</a></span>
-    <% } %>
+    <div class="search-box">
+        <span class="search-name-label">Search for: </span>
+
+        <input 
+            id="search-input"
+            type="text" 
+            name="searchFor" 
+            title="It searches for any word" 
+            placeholder="names, email or interests"
+        >
+
+        <input type="submit" value="Search" class="search-button" title="Search for profile">
+
+        <% if (typeof showReturn !== "undefined") { %>
+            <span><a href="/profiles/" class="details-edit-bt">Return to full list</a></span>
+        <% } %>
+
+    </div>
 </form>

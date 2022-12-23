@@ -10,7 +10,8 @@ class ProfileOps {
   // DB methods
   async getAllProfiles() {
     console.log("getting all profiles");
-    let profiles = await Profile.find().collation({locale: "en"}).sort({ name: 1 });
+    // sorting by lastname first, and then firstname and email subsequently
+    let profiles = await Profile.find().collation({locale: "en"}).sort({ lastName: 1, firstName: 1, email: 1 });
     return profiles;
   }
 
@@ -18,7 +19,8 @@ class ProfileOps {
     // gettingName is a flag to get all comment sender names
     // just in case other part of the system triggers this function but do not need names of the comments senders
     console.log(`getting profile by id ${id}`);
-    let profile = await Profile.findById(id);
+    // sorting by lastname first, and then firstname and email subsequently
+    let profile = await Profile.findById(id).sort({ lastName: 1, firstName: 1, email: 1 });
     // console.log("----profile---- ", profile);
 
     if (gettingName) {
@@ -27,7 +29,7 @@ class ProfileOps {
         console.log("---------------- temp: ", e);
         const temp = await this.getProfileById(e.profileId);
         return ({
-            senderName: temp.name,
+            senderName: temp.firstName,
             profileId: e.profileId,
             message: e.message,
             datePosted: e.datePosted
@@ -45,9 +47,31 @@ class ProfileOps {
   async searchFor(str) {
     const param = new RegExp(".*" + str + ".*");
 
-    const profile = await Profile.find({name:{'$regex' : param, '$options' : 'i'}})
-    return (typeof profile.name !== undefined
-              ? profile
+    // const profile = await Profile.find({name:{'$regex' : param, '$options' : 'i'}});
+    // return (typeof profile.name !== undefined
+    //           ? profile
+    //           : undefined) ;
+    // const usernames = await Profile.find({username:{'$regex' : param, '$options' : 'i'}});
+    // const emails = await Profile.find({email:{'$regex' : param, '$options' : 'i'}});
+    // const firstNames = await Profile.find({firstName:{'$regex' : param, '$options' : 'i'}});
+    // const lastNames = await Profile.find({lastName:{'$regex' : param, '$options' : 'i'}});
+    
+    // const result = [...usernames, ...emails, ...firstNames, ...lastNames];
+    
+    
+    const result = await Profile.find({
+        $or: [
+          { "username": param },
+          { "email": param },
+          { "firstName": param },
+          { "lastName": param }
+        ]
+      }
+      );
+    console.log("search resultsssssssssss: ", result);
+
+    return (result.length > 0
+              ? result
               : undefined) ;
   }
 

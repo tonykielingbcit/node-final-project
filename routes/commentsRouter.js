@@ -9,35 +9,40 @@ const commentsRouter = express.Router();
 
 // GET method routes
 commentsRouter.post("/create", async (req, res) => {
+    // console.log("-------- CREATE COMMENT::::: req.body", req.body, req.profile);
+    // req.body contains who is receiving the comment
+    // req.profile has the comments sender
+    // if (1) return res.redirect(`"${req.protocol}://${req.get('host')}${req.originalUrl}"`);
+
     try {
-        const { profileId, message, datePosted } = req.body;
+        const { profileId, message, datePosted } = req.body;  // comment RECEIVER
+        const { _id } = req.profile;  // comment SENDER
 
         const profile = await Profile.findById(profileId);
-        console.log("profile === ", profile);
+        // console.log("profile === ", profile);
 
         const newComments = [
             ...profile.receivedComments, 
             {
-                profileId,
+                profileId: _id,
                 message,
                 datePosted
             }
         ];
-        console.log("newComments==== ", newComments);
+        // console.log("newComments==== ", newComments);
 
         const addCommentProfile = new Profile({
             ...profile._doc,
             receivedComments: newComments
         });
         
-        console.log("addCommentProfile:: ", addCommentProfile);
+        // console.log("addCommentProfile:: ", addCommentProfile);
 
-        const error = await addCommentProfile.validateSync();
+        const error = addCommentProfile.validateSync();
         if (error)
             throw(error.message);
-            // console.log("got errorr:::::: ", error);
-            //   throw new Error(error.message || "Error when updating. Please try later."); // Exit if the model is invalid
-        else console.log("got NOOOOOOOOOOOOO errorr ");
+
+        else console.log("got NOOOOOOOOOOOOO errorr "); // debug purposes
 
         
 

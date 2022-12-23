@@ -1,0 +1,52 @@
+table, td, th {
+    border-collapse: collapse;
+    border-bottom: 1px solid wheat;
+}
+
+tr:nth-child(even) {
+    background-color: lightblue;
+}
+tr:nth-child(odd) {
+    background-color: lightsalmon;
+}
+
+th {
+    min-width: 7rem;
+    background-color: lightslategray;
+}
+
+td {
+    padding-left: 0.5rem;
+    font-weight: bold;
+}
+
+.search-box {
+    text-align: center;
+    /* border: 3px solid red; */
+    margin-bottom: 1.5rem;
+}
+
+#search-input {
+    width: 200px;
+    min-width: 30%;
+    border-radius: 5px;
+    border: none;
+    padding: 0.5rem;
+}
+
+.search-button {
+    border-radius: 7px;
+    width: 5rem;
+    color: darkblue;
+    font-weight: bold;
+    margin: 0 1rem 0 0.5rem;
+    border: 2px solid blue;
+    background-color: blue;
+    color: yellow;
+}
+.search-button:hover {
+    border: 2px solid greenyellow;
+    background-color: greenyellow;
+    color: maroon;
+}
+

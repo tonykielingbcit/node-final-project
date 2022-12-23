@@ -6,7 +6,13 @@ if so, redirect them to /home -->
 <% if (typeof errorMessage !== "undefined") { %>
     <% msg = errorMessage; %>
 <% } %>
-<% console.log("msg= ", msg); %>
+
+<% let displayUsername = ""; %>
+<% if (typeof username !== "undefined") { %>
+    <% displayUsername = username; %>
+<% } %>
+<% console.log("msg= ", msg, (typeof username || "YYYYYYYYYYY")); %>
+
 
 <form 
     action="/login"
@@ -18,7 +24,7 @@ if so, redirect them to /home -->
         <div class="form-container">
 
             <input type="text" name="username" class="register-inputs margin-botton" placeholder="Your username"
-                 title="Enter your username" value="<%= username || '' %>" id="username" autofocus>
+                 title="Enter your username" value="<%= displayUsername %>" id="username" autofocus>
             <input type="password" name="password" class="register-inputs margin-botton" placeholder="Password" 
                 title="Enter your Password" id="password">
             

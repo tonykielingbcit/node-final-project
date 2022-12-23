@@ -1,24 +1,31 @@
+<link rel="stylesheet" href="/styles/search.css" />
 
 <section class="profiles-page">
-    <!-- <h1><%= title %></h1> 
-    <h4><a href="/profiles/create">Create a New Profile</a></h4> -->
 
     <%- include('./layouts/search.ejs') %>
 
     <div class="profiles-list-table">
         <table>
             <tr>
-                <th>My connections</th>
-                <th></th>
+                <th colspan="3" style="min-width: 25rem;">My connections</th>
             </tr>
             <% for (let i = 0; i < profiles.length; i++) { %>
                 <tr>
                     <td>
-                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].lastName %>, <%= profiles[i].firstName%></a>
+                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].lastName %></a>
+                    </td>
+                    <td>
+                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].firstName %></a>
                     </td>
                     <td class="profiles-list-table-buttons">
-                        <a href="/profiles/edit/<%= profiles[i].id %>"><button>Edit</button></a>
-                        <a href="/profiles/delete/<%=profiles[i].id%>"><button>Delete</button></a>
+                        <!-- <a href="/profiles/edit/<%= profiles[i].id %>"><button>Edit</button></a>
+                        <a href="/profiles/delete/<%=profiles[i].id%>"><button>Delete</button></a> -->
+                        <a href="/profiles/edit/<%= profiles[i].id %>">
+                            <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
+                        </a>
+                        <a href="/profiles/delete/<%= profiles[i].id %>">
+                            <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
+                        </a>
                     </td>
                 </tr>
             <% } %>

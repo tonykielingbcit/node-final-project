@@ -7,8 +7,8 @@ profilesRouter.get("/", profileController.Index);
 
 profilesRouter.post("/search", profileController.Search);
 
-profilesRouter.get("/create", profileController.Create);
-profilesRouter.post("/create", profileController.CreateProfile);
+// profilesRouter.get("/create", profileController.Create);
+// profilesRouter.post("/create", profileController.CreateProfile);
 
 profilesRouter.get("/:id", profileController.Detail);
 

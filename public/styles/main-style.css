@@ -122,7 +122,9 @@ a {
 }
 
 .profiles-list-table-buttons {
-    padding-left: 1rem;
+    /* margin: 0 1rem; */
+    display: flex;
+    justify-content: space-evenly;
 }
 
 .profiles-list {
@@ -199,11 +201,16 @@ a {
 
 .details-title-container {
     text-align: center;
+    padding: 1rem 0;
 }
 .details-h2 {
     margin-top: 0.5rem;
     display: inline;
     margin: 0 1rem;
+}
+
+.details-edit-bt {
+    font-weight: bold;
 }
 
 .search-name-label {
@@ -438,6 +445,7 @@ footer {
     margin-left: 1rem;
     width: 45%;
     justify-content: flex-start;
+    padding-top: 2rem;
 }
 
 .profile-pic {

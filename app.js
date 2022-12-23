@@ -32,6 +32,7 @@ const profilesRouter = require("./routes/profilesRouter.js");
 const commentsRouter = require("./routes/commentsRouter.js");
 const registerRouter = require("./routes/registerRouter.js");
 const loginRouter = require("./routes/loginRouter.js");
+const logoutRouter = require("./routes/logoutRouter.js");
 
 
 
@@ -95,12 +96,14 @@ passport.deserializeUser(Profile.deserializeUser());
 /***************************************************************/
 /**************** USING THE ROUTES *****************************/
 /***************************************************************/
+const protecRoute = require("./services/protectRoute.js");
 const checkAuths = require("./services/checkAuths.js");
 app.use(checkAuths);  // it checks authentication and authorization
 
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/profiles", profilesRouter);
+app.use("/logout", logoutRouter);
+app.use("/profiles", protecRoute, profilesRouter);
 app.use("/comments", commentsRouter);
 // app.use("/api", apiProfilesRouter);
 app.use(indexRouter);
