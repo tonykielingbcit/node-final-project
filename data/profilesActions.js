@@ -26,7 +26,7 @@ class ProfileOps {
     if (gettingName) {
       // it gets the current name for each sender comments Profile
       const receivedCommentsWithName = await profile.receivedComments.map(async e => {
-        console.log("---------------- temp: ", e);
+        // console.log("---------------- temp: ", e);
         const temp = await this.getProfileById(e.profileId);
         return ({
             senderName: temp.firstName,
@@ -43,22 +43,11 @@ class ProfileOps {
     return profile;
   }
 
+  
 
   async searchFor(str) {
     const param = new RegExp(".*" + str + ".*");
 
-    // const profile = await Profile.find({name:{'$regex' : param, '$options' : 'i'}});
-    // return (typeof profile.name !== undefined
-    //           ? profile
-    //           : undefined) ;
-    // const usernames = await Profile.find({username:{'$regex' : param, '$options' : 'i'}});
-    // const emails = await Profile.find({email:{'$regex' : param, '$options' : 'i'}});
-    // const firstNames = await Profile.find({firstName:{'$regex' : param, '$options' : 'i'}});
-    // const lastNames = await Profile.find({lastName:{'$regex' : param, '$options' : 'i'}});
-    
-    // const result = [...usernames, ...emails, ...firstNames, ...lastNames];
-    
-    
     const result = await Profile.find({
         $or: [
           { "username": param },
@@ -74,6 +63,7 @@ class ProfileOps {
               ? result
               : undefined) ;
   }
+
 
 
   async createProfile(input, img) {
@@ -194,6 +184,7 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
   }
 
 
+
   async deleteProfile(id) {
     try {
         const deleteAction = await Profile.deleteOne( { "_id" : id });
@@ -214,94 +205,97 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
   }
 
 
+
   async updateProfile(bodyContent, profileId, files) {
-    let response = {
+    const interests = [];
+    for(let item in bodyContent)
+      if (item.includes("int") && (bodyContent[item].trim().length > 0))
+        interests.push(bodyContent[item].trim());
 
-    };
-
-    const initial = {
-      name: bodyContent.name,
-      imagePath: ((files && files.imagePath && files.imagePath.name) || (bodyContent.imagePath || bodyContent.tempImagePath) || ""),
-      interests: bodyContent.interests ?? []
+    const roles = {
+      isAdmin: bodyContent.isAdmin ? true : false,
+      isManager: bodyContent.isManager ? true : false
     }
 
+    const { tempImagePath } = bodyContent || undefined; 
+    const { imagePath } = bodyContent || undefined; 
+    const profile = { 
+      firstName: bodyContent.firstName,
+      lastName: bodyContent.lastName,
+      username: bodyContent.username,
+      email: bodyContent.email,
+      imagePath: imagePath || tempImagePath,
+      interests, 
+      roles
+    };
+    // console.log("NEW PROFILE::::::::::::::: ", profile);
+
     try {
-      const addTrimmed = [];
-      if (bodyContent.additionals !== "") {
-        const additionals = bodyContent.additionals.split(",");
-        for (let i of additionals)
-          if (i.trim().length > 0)
-            addTrimmed.push(i.trim());
-      }
+      const receivedImage = files && files.imagePath;
+// console.log("NEW PROFILE IMAGETPATH::::::::::::::: ", (receivedImage && receivedImage.name) || profile.imagePath);
 
-      let interests = [];
-      for(let item in bodyContent)
-          if (item.includes("interest"))
-              interests.push(bodyContent[item]);
-
-      interests = [...interests, ...addTrimmed];
-
+      const tempProfileToUpdate = await Profile.findById(profileId);
+    // console.log("CURRENT PROFILE::::::::::::::: ", tempProfileToUpdate);
+      
       const profileObj = new Profile({
           _id: profileId,
-          name: initial.name,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          email: profile.email,
+          username: profile.username,
           interests,
-          imagePath: initial.imagePath
+          roles,
+          imagePath: (receivedImage && receivedImage.name) || profile.imagePath,
+          receivedComments: tempProfileToUpdate.receivedComments
         });
+// console.log("NEW PROFILEobjjjjjjjjjj::::::::::::::: ", profileObj);
 
-      const error = await profileObj.validateSync();
+// if (1) {
+//   return ({
+//     profile,
+//     errorMessage: "looks good"
+//   });
+// }
+
+      const error = profileObj.validateSync();
       if (error)
         throw new Error(error.message || "Error when updating. Please try later."); // Exit if the model is invalid
-
-
-      const { imagePath } = files || {};
-
+        
       // Model is valid, so save it
-      if (imagePath && imagePath.name) {
-        const recordImgAt = path.join(__dirname, "..", "public", "images", imagePath.name);
-        await imagePath.mv(recordImgAt, (err) => {
-          if (err) {
-            return({
-              obj: bodyContent,
-              errorMessage: err
-            })
-          }
+      if (receivedImage && receivedImage.name) {
+        const recordImgAt = path.join(__dirname, "..", "public", "images", receivedImage.name);
+        await receivedImage.mv(recordImgAt, (err) => {
+          if (err) throw new Error(error.message || "Error when updating image. Please try later."); // Exit if the model is invalid
         });
       }
 
-      const profileToUpdate = await Profile.findById(profileObj._id);
-      profileToUpdate.name = profileObj.name;
-      profileToUpdate.interests = profileObj.interests || []
-      profileToUpdate.imagePath = ((imagePath && imagePath.name) || initial.imagePath || "");
-      
-      // const result = await profileToUpdate.save();
+      // console.log("222222 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj);
+
       const result = await Profile.updateOne(
-        {_id: profileObj._id},
+        { _id: profileId },
         { 
           $set: {
-            name: profileToUpdate.name,
-            interests: profileToUpdate.interests,
-            imagePath: profileToUpdate.imagePath
+            ...profileObj
           }
         }
       )
+      // console.log("33333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj);
 
-      response = {
-        profile: profileToUpdate,
+      return ({
+        profile: { ...profileObj },
         success: true,
         message: result.modifiedCount > 0 ? "Update has been done successfully! \\o/" : "No changes detected."
-      };
+      });
       
     } catch (err) {
-      console.log("error on update!!!!!!!!!!!", err);
+      console.error("###ERROR on update!!!!!!!!!!!", err.message || err);
 
-        response = {
-          obj: initial,
+        return ({
+          profile,
           success: false,
-          message: err.message || "Error on deleting profile. Please try again.",
-        };
+          errorMessage: err.message || err || "Error on updating profile. Please try again.",
+        });
     }
-
-    return response;
   }
 
 

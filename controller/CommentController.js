@@ -5,7 +5,7 @@ const Profile = require("../models/Profile.js");
 
 // it handles new comments
 exports.CreateComment = async function (req, res) {
-    console.log("\nNEWWWWWWWWWWWWWWWWWWWWWWWW CONTROLLERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\n");
+    // console.log("\nNEWWWWWWWWWWWWWWWWWWWWWWWW CONTROLLERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\n");
     try {
         const { profileId, message, datePosted } = req.body;  // comment RECEIVER
         const { _id } = req.profile;  // comment SENDER

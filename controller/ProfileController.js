@@ -10,7 +10,7 @@ const _profileActions = new ProfileActions();
 
 exports.Index = async function (req, res) {
   // console.log("REQUEST:::::::::::", request.session);
-  console.log("loading profiles from controller ", req.isLogged, req.profile);
+  // console.log("loading profiles from controller ", req.isLogged, req.profile, req.body);
     
   let profiles = await _profileActions.getAllProfiles();
   profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
@@ -45,12 +45,13 @@ exports.Search = async (req, res) => {
 exports.Detail = async function (req, res) {
   try {
     const profileId = req.params.id;
-    console.log(`loading single profile by id ${profileId}`);
+    // console.log(`loading single profile by id ${profileId}`);
     let visitingTo = await _profileActions.getProfileById(profileId, true);
   
     let profiles = await _profileActions.getAllProfiles();
-    profiles = profiles.filter(e => e._id.toString() !== profileId);
-  console.log("DETAILLLLLLLLLLLLLLLLL: ", req.isLogged);;
+    profiles = profiles.filter(e => e._id.toString() !== profileId.toString());
+    profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
+  // console.log("DETAILLLLLLLLLLLLLLLLL: ", req.isLogged);;
     // if (profile) {
       return res.render("profile-details", {
         title: "Express Yourself - " + visitingTo.firstName,
@@ -154,27 +155,45 @@ exports.DeleteProfile = async (req, res) => {
 exports.EditProfile = async (req, res) => {
     const profileId = req.params.id;
     console.log(`loading single profile by id ${profileId}`);
-    let profile = await _profileActions.getProfileById(profileId);
-    const validProfile = (typeof profile.name !== undefined) ? true : false;
+    const profile = await _profileActions.getProfileById(profileId);
+    // const validProfile = (typeof profile.name !== undefined) ? true : false;
 
-    res.render("profile-edit", {
-        title: "Update Profile",
-        profile,
-        errorMessage: !validProfile ? "No Profile has been found, please try again." : undefined,
-      });
+    // res.render("profile-edit", {
+    //     title: "Update Profile",
+    //     profile,
+    //     errorMessage: !validProfile ? "No Profile has been found, please try again." : undefined,
+    //   });
+
+    return res.render("profile-edit", {
+      title: "Update Profile",
+      profile,
+      isLogged: req.isLogged,
+      editor: req.profile,
+
+      // profile: req.profile,
+      // visitingTo,
+      // isLogged: req.isLogged,
+      // layoutPath: "./layouts/sideBar.ejs"
+    });
 };
 
 
 
 exports.UpdateProfile = async (req, res) => {
     const profileId = req.params.id;
+    // console.log("----------------- UPDATE: req.body: ", req.body, "\n--- req.profile: ", req.profile, req.files);
 
     const updateProfile = await _profileActions.updateProfile(req.body, profileId, req.files);
+    console.log("44444444444444444444444: ", updateProfile.profile._doc);
 
     // RECEIVE A MESSAGE from the action and set to the render accordingly
     return res.render("profile-edit", {
         title: "Update Profile",
-        profile: updateProfile.profile,
-        message: updateProfile.message
+        profile: updateProfile.profile._doc,
+        isLogged: req.isLogged,
+        editor: req.profile,
+        message: updateProfile.message,
+        errorMessage: updateProfile.errorMessage,
+        cssClass: updateProfile.errorMessage ? "error-message" : "success-message"
       });
 };

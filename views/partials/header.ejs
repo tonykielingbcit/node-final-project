@@ -2,11 +2,16 @@
 
 <%# console.log("allowed:: ", typeof isLogged !== "undefined"); %>
 
+<%# console.log("HEADER:::::::: "); %>
+
 <header>
   <nav class="menu">
     <div class="menu-left">
       <a href="/" class="menu-items">Home</a>
       <% if (typeof isLogged !== "undefined" && isLogged) { %>
+        <% if (typeof editor !== "undefined") { %>
+          <% profile = editor; %>
+        <% } %>
         <a href=<%= `/profiles/${profile._id}` %> class="menu-items" title="My profile"> Hi <%= profile.firstName %></a>
         <a href="/profiles" class="menu-items" title="List of profiles connected to me">Profiles</a>
       <% } else { %>

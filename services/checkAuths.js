@@ -7,19 +7,21 @@ module.exports = async (req, res, next) => {
     // , req.user, req.body);
 
     if (req.isAuthenticated()) {
-// console.log("permition YESSSSSSS, req.body:::::: ", req.body);
+console.log("permition YESSSSSSS, req.body:::::: "); //, req.user);
         req.isLogged = true;
-        const { _id, username, email, firstName, lastName, roles } = req.user;
+        const { _id, username, email, firstName, lastName, imagePath, interests, roles } = req.user;
         const profile = {
             _id,
             username,
             email,
             firstName, 
             lastName,
+            imagePath,
+            interests,
             roles
         };
         
-        req.roles = roles;
+        // req.roles = roles;
         req.profile = profile;
     } else {
         // console.log("no permissionnnnnnnnnnn");

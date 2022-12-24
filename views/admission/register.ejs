@@ -30,7 +30,10 @@
                  title="Enter your First Name" value="<%= (profile && profile.firstName) || ''%>">
             <input type="text" name="lastName" class="register-inputs" placeholder="Last Name"
                  title="Enter your Last Name" value="<%= (profile && profile.lastName) || ''%>">
-            <h2>Interests</h2>
+
+            <%- include('./partials/interests.ejs', { profile: profile}) %>
+            
+            <!-- <h2>Interests</h2>
             <div class="interests-container" id="interests-container">
                 <% if (profile && profile.interests && profile.interests.length > 0) { %>
                     <% console.log("profile.interests::: ", profile.interests, profile.interests.length); %>
@@ -62,7 +65,7 @@
                         >+</button>
                     </div>
                 <% } %>
-            </div>
+            </div> -->
             
             <h2>Add your picture</h2>
             <input type="file" id="image-path" name="imagePath" accept="image/gif, image/jpeg" />

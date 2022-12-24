@@ -1,15 +1,35 @@
+<link rel="stylesheet" href="/styles/edit.css" />
+
+<%# console.log("4444444444profile on profile-edit:::: ", profile); %>
+
 <% let msg = ""; %>
 <% if (typeof errorMessage !== "undefined") { %>
     <%   msg = errorMessage; %>
 <% } %>
+
 <% if (typeof message !== "undefined") { %>
     <%   msg = message; %>
 <% } %>
 
-<% let imagePath = ""; %>
-<% if (typeof profile.imagePath !== "undefined") { %>
-    <% imagePath = profile.imagePath %>
+<%# let imagePath = ""; %>
+<%# if (typeof profile.imagePath !== "undefined") { %>
+    <%# imagePath = profile.imagePath %>
+<%# } %>
+
+<% let isAdmin = ""; %>
+<% if (profile && profile.roles && profile.roles.isAdmin) { %>
+    <% isAdmin = "checked"; %>
 <% } %>
+
+<% let isManager = ""; %>
+<% if (profile && profile.roles && profile.roles.isManager) { %>
+    <% isManager = "checked"; %>
+<% } %>
+
+<% let showPermissions = false; %>
+<%# if (editor.roles.isAdmin || editor.roles.isManager || profile.roles.isAdmin || profile.roles.isManager) { %>
+    <% showPermissions = true; %>
+<%# } %>
 
 <form 
     action="/profiles/update/<%= profile._id %>"
@@ -19,46 +39,85 @@
     <section class="contact-page">
         <div class="details-title-container">
             <h2 class="details-h2">Edit Profile</h2>
-            <span><a href="/profiles" class="details-edit-bt">Return to List</a></span>
+            <span><a href="/profiles/<%= profile._id %>" class="details-edit-bt">Return to <%= profile.firstName %>'s page</a></span>
         </div>
-        <h2 id="message" class="contact-message"> <%= msg %> </h2>
 
-        <div class="edit-texts-container">
-            <% if (typeof errorMessage === "undefined") { %>
-                <h2>Name</h2>
-                <input type="text" name="name" id="" value="<%=profile.name%>" class="text-field">
-                
-                <h2>Interests</h2>
-                <% for (let i = 0; i < profile.interests.length; i++) { %>
-                    <input type="text" name="interest<%= i%>" id="" value="<%= profile.interests[i] %>" class="text-field">
+        <% if (msg) { %>
+            <h2 id="message" class="message <%= cssClass %>"> <%= msg %> </h2>
+        <% } %>
+
+        <div class="edit-items-container">
+            <%# if (typeof errorMessage === "undefined") { %>
+                <div class="edit-sub-items-container">
+                    <div class="edit-sub-div">
+                        <div class="edit-items">
+                            <span class="edit-inputs-label">First Name:</span>
+                            <input type="text" name="firstName" id="" value="<%= profile.firstName %>" class="edit-inputs">
+                        </div>
+                        <div class="edit-items">
+                            <span class="edit-inputs-label">Last Name:</span>
+                            <input type="text" name="lastName" id="" value="<%= profile.lastName %>" class="edit-inputs">
+                        </div>
+                    </div>
+                    <div class="edit-sub-div">
+                        <div class="edit-items">
+                            <span class="edit-inputs-label">Username:</span>
+                            <input type="text" name="username" id="" value="<%= profile.username %>" class="edit-inputs">
+                        </div>
+                        <div class="edit-items">
+                            <span class="edit-inputs-label">Email:</span>
+                            <input type="text" name="email" id="" value="<%= profile.email %>" class="edit-inputs">
+                        </div>
+                    </div>
+                </div>
+
+
+<% console.log("PERMISSIONS:::: ", editor.roles.isAdmin, editor.roles.isManager, profile.roles.isAdmin, profile.roles.isManager); %>
+                <% if (showPermissions) { %>
+                    <h2 class="edit-inputs-label">Permissions</h2>
+                    <div class="edit-permissions-container">
+                        <% if (editor.roles.isAdmin) { %>
+                            <input type="checkbox" id="isAdmin" name="isAdmin" <%= isAdmin %> />
+                            <label for="isAdmin"> Is Admin</label>
+                        <% } %>
+                        <% if (editor.roles.isAdmin || editor.roles.isManager) { %>
+                            <input type="checkbox" id="isManager" name="isManager" <%= isManager %> />
+                            <label for="isManager"> Is Manager</label>
+                        <% } %>
+                    </div>
                 <% } %>
-                
-                <input type="text" name="tempImagePath" value="<%= imagePath %>" hidden />
-                <input type="text" name="additionals" placeholder="Add more interests separated by commas" 
-                        class="text-field"">
+
+
+                <%- include('./partials/interests.ejs', { profile: profile}) %>
+
+
+
+   <% console.log("IMGAEPATH:::: ", profile.imagePath); %>
+
+                <input type="text" name="tempImagePath" value="<%= profile.imagePath %>" hidden />
                 
                 <h2>Profile's picture</h2>
                 <span>Change Picture</span>
                 <input type="file" name="imagePath" accept="image/gif, image/jpeg" />
-                <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
-                    <h4 class="text-centered">No picture added so far</h4>
-                <% } else { %>
+                <%# if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
+                <% if (profile.imagePath) { %>
                     <img
-                        src="/images/<%=profile.imagePath%>"
+                        src="/images/<%= profile.imagePath %>"
                         alt=""
                         width="100%"
                         class="profile-pic"
                     />
+                <% } else { %>
+                        <h4 class="text-centered">No picture added so far</h4>
                 <% } %>
     
                 <input 
                     id="updateButton"
                     type="submit"
-                    class="contact-button"
-                    title="Yes"
-                    value="Update"
+                    title="Click to save the new data"
+                    value="Update Profile"
                 >
-            <% } %>
+            <%# } %>
         </div>
     </section>
 </form>

@@ -78,7 +78,7 @@ app.use(
   require("express-session")({
     secret: process.env.secret,
     resave: true, // session renew is ON
-    cookie: {_expires : 1000 * 60 * 20}, // 20 minutes session
+    cookie: { _expires : 1000 * 60 * 20 }, // 20 minutes session
     saveUninitialized: false,
   })
 );
