@@ -10,7 +10,9 @@ module.exports = async (req, res, msg = "") => {
         .render("error", { 
                 title: "Express Yourself - Error",
                 errorMessage: msg || "No page has been found.",
-                addressError: msg ? "" : addressError
+                addressError: msg ? "" : addressError,
+                isLogged: req.isLogged,
+                profile: req.profile
         }
     );
 } 

@@ -46,18 +46,18 @@ exports.Detail = async function (req, res) {
   try {
     const profileId = req.params.id;
     // console.log(`loading single profile by id ${profileId}`);
-    let visitingTo = await _profileActions.getProfileById(profileId, true);
-  
+    let profile = await _profileActions.getProfileById(profileId, true);
+  console.log("visitingTo:::::::::::::: ", profile);
     let profiles = await _profileActions.getAllProfiles();
     profiles = profiles.filter(e => e._id.toString() !== profileId.toString());
     profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
   // console.log("DETAILLLLLLLLLLLLLLLLL: ", req.isLogged);;
     // if (profile) {
       return res.render("profile-details", {
-        title: "Express Yourself - " + visitingTo.firstName,
+        title: "Express Yourself - " + profile.firstName,
         profiles,
-        profile: req.profile,
-        visitingTo,
+        editor: req.profile,
+        profile,
         isLogged: req.isLogged,
         layoutPath: "./layouts/sideBar.ejs"
       });
@@ -73,6 +73,44 @@ exports.Detail = async function (req, res) {
     sendError(req, res, (err.message || err));
   }
 };
+
+
+exports.Delete = async (req, res) => {
+  const profileId = req.params.id;
+  console.log(`loading single profile by id ${profileId}`);
+  const profile = await _profileActions.getProfileById(profileId);
+  // const validProfile = (typeof profile.name !== undefined) ? true : false;
+
+  res.render("profile-delete", {
+      title: "Delete Profile",
+      editor: req.profile,
+      profile,
+      message: "Are you sure you want to delete this profile?",
+      isLogged: req.isLogged
+      // errorMessage: (visitingTo.length < 1) ? "No Profile has been found, please try again." : undefined,
+      // showButtons: validProfile,  // if no profile found, it does not show the buttons
+    });
+};
+
+
+exports.DeleteProfile = async (req, res) => {
+  const profileId = req.params.id;
+  
+  let profile = await _profileActions.getProfileById(profileId);
+
+  const deleteProfile = await _profileActions.deleteProfile(profileId);
+  
+  res.render("profile-delete", {
+      title: "Delete Profile - Success",
+      profile,
+      message: deleteProfile.message,
+      editor: req.profile,
+      isLogged: req.isLogged
+    });
+};
+
+
+
 
 // // Handle profile form GET request
 // exports.Create = async function (req, res) {
@@ -119,36 +157,6 @@ exports.Detail = async function (req, res) {
 //   }
 // };
 
-
-exports.Delete = async (req, res) => {
-    const profileId = req.params.id;
-    console.log(`loading single profile by id ${profileId}`);
-    let profile = await _profileActions.getProfileById(profileId);
-    const validProfile = (typeof profile.name !== undefined) ? true : false;
-
-    res.render("profile-delete", {
-        title: "Delete Profile",
-        profile,
-        message: validProfile ? "Are you sure you want to delete this profile?" : undefined,
-        errorMessage: !validProfile ? "No Profile has been found, please try again." : undefined,
-        showButtons: validProfile  // if no profile found, it does not show the buttons
-      });
-};
-
-
-exports.DeleteProfile = async (req, res) => {
-    const profileId = req.params.id;
-    
-    let profile = await _profileActions.getProfileById(profileId);
-
-    const deleteProfile = await _profileActions.deleteProfile(profileId);
-    
-    res.render("profile-delete", {
-        title: "Delete Profile - Success",
-        profile,
-        message: deleteProfile.message
-      });
-};
 
 
 

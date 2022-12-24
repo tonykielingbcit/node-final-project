@@ -31,6 +31,11 @@
     <% showPermissions = true; %>
 <%# } %>
 
+<% let isAllowedDelete = false; %>
+<% if (profile.roles.isManager) { %>
+    <% isAllowedDelete = true; %>
+<% } %>
+
 <form 
     action="/profiles/update/<%= profile._id %>"
     method="post"
@@ -40,6 +45,12 @@
         <div class="details-title-container">
             <h2 class="details-h2">Edit Profile</h2>
             <span><a href="/profiles/<%= profile._id %>" class="details-edit-bt">Return to <%= profile.firstName %>'s page</a></span>
+            
+            <% if (isAllowedDelete) { %>
+                <a href="/profiles/delete/<%= visitingTo._id %>">
+                    <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
+                </a>
+            <% } %>
         </div>
 
         <% if (msg) { %>

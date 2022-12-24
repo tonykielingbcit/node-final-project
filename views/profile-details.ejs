@@ -3,19 +3,22 @@
 <% if (typeof message !== "undefined") { %>
     <%   msg = message; %>
 <% } %>
-<%# console.log("1=============msg = PROFILE: ", profile, " VISITINGTO: ", visitingTo, "!!!"); %>
+<%# console.log("1=============msg = PROFILE: ", profile, " VISITINGTO: ", editor, "!!!"); %>
 
 <%# console.log("222222=============msg PROFILE = ", profile._id.toString(), visitingTo._id.toString(), (profile._id || visitingTo._id), "!!!"); %>
-<% let isAllowed = false; %>
-<% if ((profile._id.toString() === visitingTo._id.toString()) || (profile.roles.isManager) || (profile.roles.isAdmin)) { %>
-    <% isAllowed = true; %>
+<% let isAllowedEdit = false; %>
+<% if ((profile._id.toString() === editor._id.toString()) || (editor.roles.isManager) || (editor.roles.isAdmin)) { %>
+    <% isAllowedEdit = true; %>
 <% } %>
 
-<%# console.log("333============= isAllowed = ", isAllowed, "!!!"); %>
-    
-<% if (typeof visitingTo !== "undefined") { %>
-    <% profile = visitingTo; %>
+<% let isAllowedDelete = false; %>
+<% if (editor.roles.isManager) { %>
+    <% isAllowedDelete = true; %>
 <% } %>
+    
+<%# if (typeof visitingTo !== "undefined") { %>
+    <%# profile = visitingTo; %>
+<%# } %>
 
 <article class="profile-container">
     <section class="profile-section">
@@ -23,8 +26,17 @@
             <div class="details-title-container">
                 <h2 class="details-h2"><%= profile.firstName %></h2>
                 <!-- check if is manager or admin - it has to be allowed only if that is true-->
-                <% if (isAllowed) { %>
-                    <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span>
+                <% if (isAllowedEdit) { %>
+                    <!-- <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span> -->
+                    <a href="/profiles/edit/<%= profile._id %>">
+                        <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
+                    </a>
+                <% } %>
+                <% if (isAllowedDelete) { %>
+                    <!-- <span><a href="/profiles/delete/<%= profile._id %>" class="details-edit-bt">Delete Profile</a></span> -->
+                    <a href="/profiles/delete/<%= profile._id %>">
+                        <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
+                    </a>
                 <% } %>
             </div>
 
@@ -87,9 +99,13 @@
                                 <span
                                     title= <%= title %>
                                 >
-                                    <a href="<%= profile.receivedComments[k].profileId %>">
-                                        <%= profile.receivedComments[k].senderName %>
-                                    </a> — <%= completeDt %>
+                                    <% if (profile.receivedComments[k].senderName !== "") { %>
+                                        <a href="<%= profile.receivedComments[k].profileId %>">
+                                            <%= profile.receivedComments[k].senderName %>
+                                        </a> — <%= completeDt %>
+                                    <% } else { %>
+                                        <span>Removed Profile</span> — <%= completeDt %>
+                                    <% } %>
                                 </span>
                                 <p>
                                     <%= profile.receivedComments[k].message %>

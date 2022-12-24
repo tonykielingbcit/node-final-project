@@ -1,10 +1,12 @@
+<link rel="stylesheet" href="/styles/delete.css" />
 
-<% let msg = ""; %>
-<% if (typeof message !== "undefined") { %>
-    <%   msg = message; %>
-<% } else { %>
-    <% msg = errorMessage; %>
-<% } %>
+
+<%# let msg = ""; %>
+<%# if (typeof message !== "undefined") { %>
+    <%#   msg = message; %>
+<%# } else { %>
+    <%# msg = errorMessage; %>
+<%# } %>
 
 <% const id = profile._id %>
 <form 
@@ -16,36 +18,28 @@
             <h2 class="details-h2">Delete Profile</h2>
             <span><a href="/profiles" class="details-edit-bt">Return to List</a></span>
         </div>
+        
+        <div class="delete-container">
+            <h2 id="message" class="delete-message"> <%= message %> </h2>
+            
+            <div class="edit-texts-container">
+                <%# if (typeof errorMessage === "undefined") { %>
+                    <h2>First Name: <%= profile.firstName %></h2>
+                    <h2>Last Name: <%= profile.lastName %></h2>
+                    <h2>Email: <%= profile.email %></h2>
+                    <h2>Username: <%= profile.username %></h2>
+                <%# } %>
+            </div>
 
-        <h2 id="message" class="contact-message"> <%= msg %> </h2>
-
-        <div class="delete-buttons-container">
-            <% if (typeof showButtons !== "undefined") { %>
-                <input 
-                    id="submitButtonYes"
-                    type="submit"
-                    class="contact-button delete-button db-yes"
-                    title="Yes"
-                    value="Yes"
-                >
-            <% } %>
-        </div>
-
-        <div class="edit-texts-container">
-            <% if (typeof errorMessage === "undefined") { %>
-                <h2>Name: <%= profile.name %></h2>
-                
-                <h2>Interests</h2>
-                <% if (profile.interests.length < 1) { %>
-                    <h4 class="text-centered">No interestes added so far</h4>
-                <% } else { %>
-                    <ul class="profile-list">
-                        <% for (let i = 0; i < profile.interests.length; i++) { %>
-                            <li><%= profile.interests[i]%></li>
-                        <% } %>
-                    </ul>
-                <% } %>
-            <% } %>
+            <div class="delete-buttons-container">
+                <%# if (typeof showButtons !== "undefined") { %>
+                    <input 
+                        id="deleteButton"
+                        class="delete-button"
+                        type="submit"
+                        value="I am sure!"
+                    >
+                <%# } %>
         </div>
     </section>
 </form>

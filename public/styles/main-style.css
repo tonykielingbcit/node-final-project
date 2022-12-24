@@ -139,11 +139,6 @@ a {
     align-items: center;
 } */
 
-.delete-buttons-container {
-    display: flex;
-    justify-content: space-around;
-    color: black;
-}
 
 
 /* profile page */
@@ -200,8 +195,16 @@ a {
 }
 
 .details-title-container {
+    /* border: 2px solid red; */
     text-align: center;
-    padding: 0 0 2rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0;
+    background-color: lightblue;
+    border-radius: 5px 5px 0 0;
+    border-bottom: 2px solid lightseagreen;
+    /* padding: 0 0 2rem 0; */
 }
 .details-h2 {
     margin-top: 0.5rem;
@@ -345,7 +348,7 @@ a {
 
 .contact-page {
     border: 1px solid gray;
-    padding: 1rem;
+    /* padding: 1rem; */
     margin: 3rem auto;
     min-width: 60%;
     width: 70%;
@@ -353,6 +356,8 @@ a {
     flex-direction: column;
     border-radius: 5px;
 }
+
+
 /* contact page */
 /* 
 
@@ -360,10 +365,6 @@ a {
     text-align: center;
 }
 
-.contact-message {
-    color: blue;
-    text-align: center;
-}
 
 .contact-textarea {
     padding: 1rem;
@@ -415,10 +416,6 @@ footer {
     border-top: 2px solid #66CCAA;
 }
 
-
-.delete-button {
-    width: 8rem;
-}
 
 .db-yes {
     background-color: red;
