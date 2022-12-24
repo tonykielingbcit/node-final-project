@@ -1,53 +1,52 @@
 "use strict"
 
-const registerAddButton = document.getElementById("register-add-button");
-registerAddButton && registerAddButton.addEventListener("click", e => {
-    e.preventDefault();
+// const registerAddButton = document.getElementById("register-add-button");
+// registerAddButton && registerAddButton.addEventListener("click", e => {
+//     e.preventDefault();
 
+//     const allInterestsElementsCount = document.getElementsByClassName("interests");
+//     const currentInterestsCount = allInterestsElementsCount.length;
+//     console.log("allInterestsElements::: ", currentInterestsCount);
+//     console.log("addddd+++++++++++", `int${currentInterestsCount}`);
+    
+//     const currentInput = document.getElementById(`int${currentInterestsCount}`);
+    
+//     if (currentInput.value.trim() === "") {
+//         currentInput.focus();
+//         return;
+//     }
 
-    const allInterestsElementsCount = document.getElementsByClassName("interests");
-    const currentInterestsCount = allInterestsElementsCount.length;
-    console.log("allInterestsElements::: ", currentInterestsCount);
-    console.log("addddd +", `int${currentInterestsCount}`);
+//     const interestsContainer = document.getElementById("interests-container");
     
-    const currentInput = document.getElementById(`int${currentInterestsCount}`);
+//     const newDiv = document.createElement("div");
+//     newDiv.className = "interests margin-botton";
+//     newDiv.id = "interests";
     
-    if (currentInput.value.trim() === "") {
-        currentInput.focus();
-        return;
-    }
+//     const input = document.createElement("input");
+//     input.type = "text";
+//     input.className = "register-inputs";
+//     input.name = `int${currentInterestsCount + 1}`;
+//     input.id = `int${currentInterestsCount + 1}`;
+//     newDiv.appendChild(input);
+    
+//     const registerAddButton = document.getElementById("register-add-button");
+//     newDiv.appendChild(registerAddButton);
 
-    const interestsContainer = document.getElementById("interests-container");
-    
-    const newDiv = document.createElement("div");
-    newDiv.className = "interests margin-botton";
-    newDiv.id = "interests";
-    
-    const input = document.createElement("input");
-    input.type = "text";
-    input.className = "register-inputs";
-    input.name = `int${currentInterestsCount + 1}`;
-    input.id = `int${currentInterestsCount + 1}`;
-    newDiv.appendChild(input);
-    
-    const registerAddButton = document.getElementById("register-add-button");
-    newDiv.appendChild(registerAddButton);
-
-    interestsContainer.appendChild(newDiv);
-    input.focus();
-});
+//     interestsContainer.appendChild(newDiv);
+//     input.focus();
+// });
 
 
 // check whether password and confirmPassword match, if not, it does not go to the server and asks user to fix it
 // also, it cheks username filling
 const registerButton = document.getElementById("registerButton");
 registerButton && registerButton.addEventListener("click", e => {
-    // e.preventDefault();
+    e.preventDefault();
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const username = document.getElementById("username");
-
     console.log("password.value.trim()::: ", password.value.trim());
+
     // if (password.value.trim() === "") {
     //     console.log("password.value.trim()22222222::: ", password.value.trim());
     //     e.preventDefault();

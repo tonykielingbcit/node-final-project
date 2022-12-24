@@ -43,7 +43,7 @@ class ProfileOps {
     return profile;
   }
 
-  
+
 
   async searchFor(str) {
     const param = new RegExp(".*" + str + ".*");
@@ -65,7 +65,7 @@ class ProfileOps {
   }
 
 
-
+/*
   async createProfile(input, img) {
     // it arranges int(x) HTML fields into an array
     const interests = [];
@@ -84,16 +84,14 @@ class ProfileOps {
 
   // console.log("---coming data::: ", username, email, password, confirmPassword, firstName, lastName);
   //     console.log("interests:: ", interests, imagePath);
-      if (!1) {
-        // let profiles = await _profileActions.getAllProfiles(); ////////////////
-
-        return (
-          {
-            profile,
-            errorMsg: "ALL GOOD"
-          }
-        );
-      }
+      // if (!1) {
+      //   return (
+      //     {
+      //       profile,
+      //       errorMsg: "ALL GOOD"
+      //     }
+      //   );
+      // }
 
       if (password !== confirmPassword) // it is been done in fronte and now back end, as well
         return ({
@@ -182,7 +180,7 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
       });
     }
   }
-
+*/
 
 
   async deleteProfile(id) {

@@ -63,7 +63,10 @@
     color: blue;
 }
 
-#updateButton {
+
+#updateButton,
+#registerButton,
+#loginButton {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
     border-radius: 7px;
@@ -73,7 +76,9 @@
     font-size: calc(100% + 4px);
     font-weight: bold;
 }
-#updateButton:hover {
+#updateButton:hover,
+#registerButton:hover,
+#loginButton:hover {
     border: 2px solid lightskyblue;
     background-color: lightskyblue;
     color: maroon;

@@ -1,4 +1,5 @@
 <link rel="stylesheet" href="/styles/register.css" />
+<link rel="stylesheet" href="/styles/edit.css" />
 
 <% let msg = ""; %>
 <% let errorClass = "error-message-none"; %>
@@ -31,7 +32,7 @@
             <input type="text" name="lastName" class="register-inputs" placeholder="Last Name"
                  title="Enter your Last Name" value="<%= (profile && profile.lastName) || ''%>">
 
-            <%- include('./partials/interests.ejs', { profile: profile}) %>
+            <%- include('../partials/interests.ejs', { profile: profile}) %>
             
             <!-- <h2>Interests</h2>
             <div class="interests-container" id="interests-container">
@@ -76,8 +77,8 @@
 
             <input 
                 id="registerButton"
+                class="register-button"
                 type="submit"
-                class="contact-button"
                 title="Click to create your account"
                 value="Register"
             >
