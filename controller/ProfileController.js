@@ -20,6 +20,7 @@ exports.Index = async function (req, res) {
     profiles: profiles.length ? profiles : [],
     isLogged: req.isLogged,
     profile: req.profile
+    // editor: req.profile
   });
 };
 
@@ -199,7 +200,9 @@ exports.UpdateProfile = async (req, res) => {
         title: "Update Profile",
         profile: updateProfile.profile._doc || updateProfile.profile,
         isLogged: req.isLogged,
-        editor: req.profile,
+        editor: (req.profile.isAdmin || req.profile.isManager) 
+                  ? (updateProfile.profile._doc || updateProfile.profile) 
+                  : req.profile,
         message: updateProfile.message,
         errorMessage: updateProfile.errorMessage,
         cssClass: updateProfile.errorMessage ? "error-message" : "success-message"

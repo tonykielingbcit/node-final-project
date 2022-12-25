@@ -1,0 +1,25 @@
+
+.index-page {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+h3 {
+    color: blue;
+    font-size: 30px;
+    font-weight: bold
+}
+
+p {
+    color: black;
+    font-size: 25px;
+}
+
+.text-1,
+.text-2 {
+    margin-top: 4rem;
+}
+
+.text-3 {
+    margin-top: 0;
+}

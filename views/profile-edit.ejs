@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="/styles/edit.css" />
 
-<% console.log("4444444444profile on profile-edit:::: ", profile); %>
+<% console.log("4444444444profile on profile-edit:::: ", profile, editor); %>
 
 <% let msg = ""; %>
 <% if (typeof errorMessage !== "undefined") { %>
@@ -16,16 +16,25 @@
     <%# imagePath = profile.imagePath %>
 <%# } %>
 
-<% let isAdmin = ""; %>
-<% if (profile && profile.roles && profile.roles.isAdmin) { %>
-    <% isAdmin = "checked"; %>
+<% let editorIsAdmin = ""; %>
+<% if (editor && editor.roles && editor.roles.isAdmin) { %>
+    <% editorIsAdmin = true; %>
 <% } %>
 
-<% let isManager = ""; %>
-<% if (profile && profile.roles && profile.roles.isManager) { %>
-    <% isManager = "checked"; %>
+<% let editorIsManager = ""; %>
+<% if (editor && editor.roles && editor.roles.isManager) { %>
+    <% editorIsManager = true; %>
 <% } %>
 
+<% let profileIsAdmin = ""; %>
+<% if (profile.roles.isAdmin) { %>
+    <% profileIsAdmin = "checked"; %>
+<% } %>
+
+<% let profileIsManager = ""; %>
+<% if (profile.roles.isManager) { %>
+    <% profileIsManager = "checked"; %>
+<% } %>
 
 <form 
     action="/profiles/update/<%= profile._id %>"
@@ -37,7 +46,7 @@
             <h2 class="details-h2">Edit Profile</h2>
             <span><a href="/profiles/<%= profile._id %>" class="details-edit-bt">Return to <%= profile.firstName %>'s page</a></span>
             
-            <% if (isAdmin) { %>
+            <% if (editorIsAdmin) { %>
                 <a href="/profiles/delete/<%= profile._id %>" class="delete-icon">
                     <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
                 </a>
@@ -48,87 +57,85 @@
             <h2 id="message" class="message <%= cssClass %>"> <%= msg %> </h2>
         <% } %>
 
+        <input type="text" name="username" value="<%= profile.username %>" hidden>
         <div class="edit-items-container">
-            <%# if (typeof errorMessage === "undefined") { %>
-                <div class="edit-sub-items-container">
-                    <div class="edit-sub-div">
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">First Name:</span>
-                            <input type="text" name="firstName" value="<%= profile.firstName %>" class="edit-inputs" tabindex="1">
-                        </div>
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">Username:</span>
-                            <input type="text" name="username" value="<%= profile.username %>" class="edit-inputs" tabindex="3">
-                        </div>
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">Password:</span>
-                            <input type="password" name="newPassword" id="newPassword" class="edit-inputs" title="New Password?" tabindex="5">
-                        </div>
+            <div class="edit-sub-items-container">
+                <div class="edit-sub-div">
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">First Name:</span>
+                        <input type="text" name="firstName" value="<%= profile.firstName %>" class="edit-inputs" tabindex="1">
                     </div>
-                    <div class="edit-sub-div">
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">Last Name:</span>
-                            <input type="text" name="lastName" value="<%= profile.lastName %>" class="edit-inputs" tabindex="2">
-                        </div>
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">Email:</span>
-                            <input type="text" name="email" value="<%= profile.email %>" class="edit-inputs" tabindex="4">
-                        </div>
-                        <div class="edit-items">
-                            <span class="edit-inputs-label">Confirm:</span>
-                            <input type="password" name="confirmPassword" id="confirmPassword" class="edit-inputs" 
-                                title="Confirm new password" tabindex="6">
-                        </div>
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">Username:</span>
+                        <input type="text" value="<%= profile.username %>" class="edit-inputs" disabled>
+                    </div>
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">Password:</span>
+                        <input type="password" name="newPassword" id="newPassword" class="edit-inputs" title="New Password?" tabindex="4">
                     </div>
                 </div>
+                <div class="edit-sub-div">
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">Last Name:</span>
+                        <input type="text" name="lastName" value="<%= profile.lastName %>" class="edit-inputs" tabindex="2">
+                    </div>
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">Email:</span>
+                        <input type="email" name="email" value="<%= profile.email %>" class="edit-inputs" tabindex="3">
+                    </div>
+                    <div class="edit-items">
+                        <span class="edit-inputs-label">Confirm:</span>
+                        <input type="password" name="confirmPassword" id="confirmPassword" class="edit-inputs" 
+                            title="Confirm new password" tabindex="5">
+                    </div>
+                </div>
+            </div>
 
 
 <% console.log("PERMISSIONS:::: ", editor.roles.isAdmin, editor.roles.isManager, profile.roles.isAdmin, profile.roles.isManager); %>
-                <% if (isAdmin || isManager) { %>
-                    <h2 class="edit-inputs-label">Permissions</h2>
-                    <div class="edit-permissions-container">
-                        <% if (editor.roles.isAdmin) { %>
-                            <input type="checkbox" id="isAdmin" name="isAdmin" <%= isAdmin %> />
-                            <label for="isAdmin"> Is Admin</label>
-                        <% } %>
-                        <% if (editor.roles.isAdmin || editor.roles.isManager) { %>
-                            <input type="checkbox" id="isManager" name="isManager" <%= isManager %> />
-                            <label for="isManager"> Is Manager</label>
-                        <% } %>
-                    </div>
-                <% } %>
+            <% if (editorIsAdmin || editorIsManager) { %>
+                <h2 class="edit-inputs-label">Permissions</h2>
+                <div class="edit-permissions-container">
+                    <% if (editorIsAdmin) { %>
+                        <input type="checkbox" id="isAdmin" name="isAdmin" <%= profileIsAdmin %> />
+                        <label for="isAdmin"> Is Admin</label>
+                    <% } %>
+                    <% if (editorIsAdmin || editorIsManager) { %>
+                        <input type="checkbox" id="isManager" name="isManager" <%= profileIsManager %> />
+                        <label for="isManager"> Is Manager</label>
+                    <% } %>
+                </div>
+            <% } %>
 
 
-                <%- include('./partials/interests.ejs', { profile: profile}) %>
+            <%- include('./partials/interests.ejs', { profile: profile}) %>
 
 
 
    <%# console.log("IMGAEPATH:::: ", profile.imagePath); %>
 
-                <input type="text" name="tempImagePath" value="<%= profile.imagePath %>" hidden />
-                
-                <h2>Profile's picture</h2>
-                <span>Change Picture</span>
-                <input type="file" name="imagePath" accept="image/gif, image/jpeg" />
-                <%# if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
-                <% if (profile.imagePath) { %>
-                    <img
-                        src="/images/<%= profile.imagePath %>"
-                        alt=""
-                        width="100%"
-                        class="profile-pic"
-                    />
-                <% } else { %>
-                        <h4 class="text-centered">No picture added so far</h4>
-                <% } %>
-    
-                <input 
-                    id="updateButton"
-                    type="submit"
-                    title="Click to save the new data"
-                    value="Update Profile"
-                >
-            <%# } %>
+            <input type="text" name="tempImagePath" value="<%= profile.imagePath %>" hidden />
+            
+            <h2>Profile's picture</h2>
+            <span>Change Picture</span>
+            <input type="file" name="imagePath" accept="image/gif, image/jpeg" />
+            <% if (profile.imagePath) { %>
+                <img
+                    src="/images/<%= profile.imagePath %>"
+                    alt=""
+                    width="100%"
+                    class="profile-pic"
+                />
+            <% } else { %>
+                    <h4 class="text-centered">No picture added so far</h4>
+            <% } %>
+
+            <input 
+                id="updateButton"
+                type="submit"
+                title="Click to save the new data"
+                value="Update Profile"
+            >
         </div>
     </section>
 </form>

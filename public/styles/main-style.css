@@ -98,7 +98,7 @@ a {
 
 
 /* home page*/
-.index-page {
+/* .index-page {
     text-align: center;
     margin-top: 5rem;
     color: blue;
@@ -112,7 +112,7 @@ a {
 
 .text-field {
     width: 50%;
-}
+} */
 
 /* profiles page */
 .profiles-page {
@@ -174,6 +174,15 @@ a {
 .profile-name {
     text-align: center;
     font-size: 30px;
+}
+
+.profile-inters {
+    width: 100%;
+    border: 1px solid gray;
+    border-radius: 7px;
+    padding: 1rem;
+    padding-top: 0;
+    margin: 1rem 0;
 }
 
 .profile-inters h2 {
@@ -466,6 +475,7 @@ footer {
     background-color: azure;
     max-height: 200px;
     width: fit-content;
+    margin-bottom: 1.5rem
 }
 
 .text-centered {
@@ -584,4 +594,12 @@ footer {
     background-color: lightblue;
     border: 3px solid blue;
     border-radius: 5px;
+}
+
+.th-title {
+    min-width: 25rem; 
+    font-size: calc(100% + 8px);
+    border-radius: 8px 8px 0 0 ;
+    background-color: yellowgreen;
+    color: midnightblue;
 }

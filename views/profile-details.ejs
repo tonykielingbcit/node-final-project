@@ -12,13 +12,10 @@
 <% } %>
 
 <% let isAllowedDelete = false; %>
-<% if (editor.roles.isManager) { %>
+<% if (editor.roles.isAdmin) { %>
     <% isAllowedDelete = true; %>
 <% } %>
-    
-<%# if (typeof visitingTo !== "undefined") { %>
-    <%# profile = visitingTo; %>
-<%# } %>
+
 
 <article class="profile-container">
     <section class="profile-section">
@@ -48,14 +45,6 @@
                 <div 
                     class="img-container"
                 >
-                    <div>
-                        <h3 class="detail-items">First Name: <%= profile.firstName %></h3>
-                        <h3 class="detail-items">Last Name: <%= profile.lastName %></h3>
-                        <h3 class="detail-items">Username: <%= profile.username %></h3>
-                        <h3 class="detail-items">Email: <%= profile.email %></h3>
-                    </div>
-                    
-                    <!-- <h1 class="profile-name"><%= profile.name %></h1> -->
                     <% if ((typeof profile.imagePath === "undefined") || (profile.imagePath.length < 1)) { %>
                         <h4 class="text-centered">No picture added so far</h4>
                     <% } else { %>
@@ -67,6 +56,13 @@
                         />
                     <% } %>
 
+                    <div>
+                        <h3 class="detail-items">First Name: <%= profile.firstName %></h3>
+                        <h3 class="detail-items">Last Name: <%= profile.lastName %></h3>
+                        <h3 class="detail-items">Username: <%= profile.username %></h3>
+                        <h3 class="detail-items">Email: <%= profile.email %></h3>
+                    </div>
+                    
                     <div class="profile-inters">
                         <h3>Interests</h3>
                         <% if (profile.interests.length < 1) { %>

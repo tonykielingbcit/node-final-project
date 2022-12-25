@@ -1,3 +1,16 @@
+<% let numberOfColumns = 3; %>
+<% let isAdmin = ""; %>
+<% if (profile && profile.roles && profile.roles.isAdmin) { %>
+    <% isAdmin = "checked"; %>
+    <% numberOfColumns = 4; %>
+<% } %>
+
+<% let isManager = ""; %>
+<% if (profile && profile.roles && profile.roles.isManager) { %>
+    <% isManager = "checked"; %>
+    <% numberOfColumns = 4; %>
+<% } %>
+
 <link rel="stylesheet" href="/styles/search.css" />
 
 <section class="profiles-page">
@@ -7,7 +20,17 @@
     <div class="profiles-list-table">
         <table>
             <tr>
-                <th colspan="3" style="min-width: 25rem;">My connections</th>
+                <!-- <th colspan="<%= numberOfColumns %>" style="min-width: 25rem;">My connections</th> -->
+                <th colspan="<%= numberOfColumns %>" class="th-title">My connections</th>
+            </tr>
+            <tr>
+                <!-- <th colspan="<%= numberOfColumns %>" style="min-width: 25rem;">My connections</th> -->
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Username</th>
+                <% if (isAdmin || isManager) { %>
+                    <th></th>
+                <% } %>
             </tr>
             <% for (let i = 0; i < profiles.length; i++) { %>
                 <tr>
@@ -17,16 +40,23 @@
                     <td>
                         <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].firstName %></a>
                     </td>
-                    <td class="profiles-list-table-buttons">
+                    <td>
+                        <a href="../profiles/<%= profiles[i].id %>"><%= profiles[i].username %></a>
+                    </td>
+                    <% if (isAdmin || isManager) { %>
+                        <td class="profiles-list-table-buttons">
                         <!-- <a href="/profiles/edit/<%= profiles[i].id %>"><button>Edit</button></a>
                         <a href="/profiles/delete/<%=profiles[i].id%>"><button>Delete</button></a> -->
-                        <a href="/profiles/edit/<%= profiles[i].id %>" class="edit-icon">
-                            <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
-                        </a>
-                        <a href="/profiles/delete/<%= profiles[i].id %>" class="delete-icon">
-                            <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
-                        </a>
-                    </td>
+                            <a href="/profiles/edit/<%= profiles[i].id %>" class="edit-icon">
+                                <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
+                            </a>
+                        <% } %>
+                        <% if (isAdmin) { %>
+                            <a href="/profiles/delete/<%= profiles[i].id %>" class="delete-icon">
+                                <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
+                            </a>
+                        </td>
+                    <% } %>
                 </tr>
             <% } %>
         </table>
