@@ -66,7 +66,7 @@ registerButton && registerButton.addEventListener("click", e => {
     } else
         firstName.style.border = "none";
 
-    if ((password.value.trim() === "") || (password.value.trim() !== confirmPassword.value.trim())) {
+    if ((password.value === "") || (password.value !== confirmPassword.value)) {
         // console.log("password: ", password.value, "confirmPassword: ", confirmPassword.value);
         e.preventDefault();
         password.value = "";
@@ -90,9 +90,12 @@ registerButton && registerButton.addEventListener("click", e => {
     } else
         username.style.border = "none";
 
-});
+    if (username.value.trim().indexOf(" ") >= 0) {
+        e.preventDefault();
+        username.style.border = "3px solid red";
+        username.title = "Username cannot have spaces";
+        username.focus();
+    } else
+        username.style.border = "none";
 
-// const imagePath = document.getElementById("image-path");
-// imagePath && document.onload(e => {
-//     console.log("loading register...........................");
-// });
+});

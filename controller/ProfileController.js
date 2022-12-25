@@ -192,12 +192,12 @@ exports.UpdateProfile = async (req, res) => {
     // console.log("----------------- UPDATE: req.body: ", req.body, "\n--- req.profile: ", req.profile, req.files);
 
     const updateProfile = await _profileActions.updateProfile(req.body, profileId, req.files);
-    // console.log("44444444444444444444444: ", updateProfile.profile._doc);
+    // console.log("44444444444444444444444: ", updateProfile.profile._doc || updateProfile.profile);
 
     // RECEIVE A MESSAGE from the action and set to the render accordingly
     return res.render("profile-edit", {
         title: "Update Profile",
-        profile: updateProfile.profile._doc,
+        profile: updateProfile.profile._doc || updateProfile.profile,
         isLogged: req.isLogged,
         editor: req.profile,
         message: updateProfile.message,

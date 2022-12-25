@@ -4,7 +4,7 @@ const path = require("path");
 const passport = require("passport");
 const Profile = require("../models/Profile.js");
 // const RequestService = require("../services/RequestService");
-const checkAuths = require("../services/checkAuths.js");
+// const checkAuths = require("../services/checkAuths.js");
 
 // const ProfileActions = require("../data/profilesActions.js");
 // instantiate the class so we can use its methods
@@ -55,7 +55,7 @@ console.log("REGISTER------------------------------------");
     //   );
     // }
     
-    if (password !== confirmPassword) // it is been done in fronte and now back end, as well
+    if (password !== confirmPassword) // it is been done in front and now back end, as well
       return res.render("admission/register",
       {
         title: "Register - error",

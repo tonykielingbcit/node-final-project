@@ -221,8 +221,10 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
     }
 
     const { tempImagePath } = bodyContent || undefined; 
-    const { imagePath } = bodyContent || undefined; 
+    const { imagePath } = bodyContent || undefined;
+    const { newPassword, confirmPassword } = bodyContent;
     const profile = { 
+      _id: profileId,
       firstName: bodyContent.firstName,
       lastName: bodyContent.lastName,
       username: bodyContent.username,
@@ -238,9 +240,8 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
 // console.log("NEW PROFILE IMAGETPATH::::::::::::::: ", (receivedImage && receivedImage.name) || profile.imagePath);
 
       const tempProfileToUpdate = await Profile.findById(profileId);
-    // console.log("CURRENT PROFILE::::::::::::::: ", tempProfileToUpdate);
       
-      const profileObj = new Profile({
+      let profileObj = new Profile({
           _id: profileId,
           firstName: profile.firstName,
           lastName: profile.lastName,
@@ -251,7 +252,18 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
           imagePath: (receivedImage && receivedImage.name) || profile.imagePath,
           receivedComments: tempProfileToUpdate.receivedComments
         });
-// console.log("NEW PROFILEobjjjjjjjjjj::::::::::::::: ", profileObj);
+
+      // it checks whether user wants to update passowrd and handles that
+      if (newPassword) {
+        if (newPassword !== confirmPassword) // it check on backend
+          return ({
+            profile,
+            errorMessage: "Passwords have to match"
+          });
+        else
+          await profileObj.setPassword(newPassword);
+      }
+// console.log("===============NEW PROFILEobjjjjjjjjjj::::::::::::::: ", profileObj);
 
 // if (1) {
 //   return ({
@@ -282,8 +294,14 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
           }
         }
       )
-      // console.log("33333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj);
+      // console.log("33333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj.hash, profileObj.salt);
 
+      if (profileObj.hash)
+        profileObj.hash = undefined;
+      if (profile.salt)
+        profileObj.salt = undefined;
+      // console.log("3333333333     333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj.hash, profileObj.salt);
+        
       return ({
         profile: { ...profileObj },
         success: true,

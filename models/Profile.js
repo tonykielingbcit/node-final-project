@@ -18,23 +18,26 @@ const profileSchema = mongoose.Schema(
     name: {type: "String"},////////////////////////////////temp one, has to be removed later on
     username: { 
       type: mongoose.Schema.Types.String, 
-      // required: true,
-      // index: true
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+      index: true
     },
     email: { 
-      type: mongoose.Schema.Types.String, 
-      // required: true,
-      // index: true
+      type: mongoose.Schema.Types.String
     },
-    password: { 
-      type: mongoose.Schema.Types.String, 
+    // password: { 
+    //   type: mongoose.Schema.Types.String, 
       // required: true
-    },
+    // },
     firstName: { 
       type: mongoose.Schema.Types.String, 
+      required: true
     },
     lastName: { 
-      type: mongoose.Schema.Types.String, 
+      type: mongoose.Schema.Types.String,
+      required: true
     },
     imagePath: { 
       type: mongoose.Schema.Types.String

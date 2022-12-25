@@ -40,6 +40,10 @@ a {
     border-radius: 15px;
 }
 
+.menu-items:focus {
+    outline: 1px solid wheat;
+}
+
 .menu-left {
     /* border: 1px solid red; */
     display: flex;
