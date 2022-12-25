@@ -47,7 +47,7 @@ exports.Detail = async function (req, res) {
     const profileId = req.params.id;
     // console.log(`loading single profile by id ${profileId}`);
     let profile = await _profileActions.getProfileById(profileId, true);
-  console.log("visitingTo:::::::::::::: ", profile);
+  console.log("profile:::::::::::::: ", profile);
     let profiles = await _profileActions.getAllProfiles();
     profiles = profiles.filter(e => e._id.toString() !== profileId.toString());
     profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());

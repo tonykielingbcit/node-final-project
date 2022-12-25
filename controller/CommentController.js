@@ -18,7 +18,8 @@ exports.CreateComment = async function (req, res) {
             {
                 profileId: _id,
                 message,
-                datePosted
+                datePosted,
+                name: profile.firstName
             }
         ];
         // console.log("newComments==== ", newComments);

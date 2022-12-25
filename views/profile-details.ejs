@@ -28,13 +28,13 @@
                 <!-- check if is manager or admin - it has to be allowed only if that is true-->
                 <% if (isAllowedEdit) { %>
                     <!-- <span><a href="/profiles/edit/<%= profile._id %>" class="details-edit-bt">Edit</a></span> -->
-                    <a href="/profiles/edit/<%= profile._id %>">
+                    <a href="/profiles/edit/<%= profile._id %>" class="edit-icon">
                         <img src="/icons/edit-icon.png" alt="Edit" height='25' width='25' title="Edit Profile">
                     </a>
                 <% } %>
                 <% if (isAllowedDelete) { %>
                     <!-- <span><a href="/profiles/delete/<%= profile._id %>" class="details-edit-bt">Delete Profile</a></span> -->
-                    <a href="/profiles/delete/<%= profile._id %>">
+                    <a href="/profiles/delete/<%= profile._id %>" class="delete-icon">
                         <img src="/icons/delete-icon.png" alt="Delete" height='25' width='25' title="Delete Profile">
                     </a>
                 <% } %>
@@ -96,15 +96,18 @@
                             <% const title = `${profile.receivedComments[k].senderName}'s_profile`; %> 
                             <% // title does not accept space %>
                             <div class="individual-comment">
-                                <span
-                                    title= <%= title %>
-                                >
-                                    <% if (profile.receivedComments[k].senderName !== "") { %>
-                                        <a href="<%= profile.receivedComments[k].profileId %>">
+                                <span>
+                                    <% if (!profile.receivedComments[k].removed) { %>
+                                        <a 
+                                            href="<%= profile.receivedComments[k].profileId %>"
+                                            title= <%= title %>
+                                        >
                                             <%= profile.receivedComments[k].senderName %>
                                         </a> — <%= completeDt %>
                                     <% } else { %>
-                                        <span>Removed Profile</span> — <%= completeDt %>
+                                        <span 
+                                            title="Profile has been removed"><%= profile.receivedComments[k].removed %>
+                                        </span> — <%= completeDt %>
                                     <% } %>
                                 </span>
                                 <p>

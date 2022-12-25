@@ -19,54 +19,22 @@
         <h2 class="contact-h2">Create Account</h2>
         
         <div class="form-container">
-            <input type="text" name="username" class="register-inputs margin-botton" placeholder="Your username"
-                 title="Enter your username" value="<%= (profile && profile.username) || ''%>" autofocus id="username">
+            <input type="text" name="username" class="register-inputs margin-botton asd" placeholder="* Your username"
+                 title="Enter your username - Mandatory" value="<%= (profile && profile.username) || ''%>" autofocus id="username">
             <input type="email" name="email" class="register-inputs margin-botton" placeholder="Email" 
                 title="Enter your Email" value="<%= (profile && profile.email) || ''%>">
-            <input type="password" name="password" class="register-inputs margin-botton" placeholder="Password" 
-                title="Enter your Password" id="password">
-            <input type="password" name="confirmPassword" class="register-inputs margin-botton" placeholder="Confirm your password" 
-                title="Confirm your Password" id="confirmPassword">
-            <input type="text" name="firstName" class="register-inputs margin-botton" placeholder="First Name"
-                 title="Enter your First Name" value="<%= (profile && profile.firstName) || ''%>">
-            <input type="text" name="lastName" class="register-inputs" placeholder="Last Name"
-                 title="Enter your Last Name" value="<%= (profile && profile.lastName) || ''%>">
+            <input type="password" name="password" class="register-inputs margin-botton asd" placeholder="* Password" 
+                title="Enter your Password - Mandatory" id="password">
+            <input type="password" name="confirmPassword" class="register-inputs margin-botton" placeholder="* Confirm your password" 
+                title="Confirm your Password - Mandatory" id="confirmPassword">
+            <input type="text" name="firstName" class="register-inputs margin-botton" placeholder="* First Name"
+                 title="Enter your First Name - Mandatory" value="<%= (profile && profile.firstName) || ''%>" id="firstName">
+            <input type="text" name="lastName" class="register-inputs" placeholder="* Last Name"
+                 title="Enter your Last Name - Mandatory" value="<%= (profile && profile.lastName) || ''%>" id="lastName">
+
 
             <%- include('../partials/interests.ejs', { profile: profile}) %>
             
-            <!-- <h2>Interests</h2>
-            <div class="interests-container" id="interests-container">
-                <% if (profile && profile.interests && profile.interests.length > 0) { %>
-                    <% console.log("profile.interests::: ", profile.interests, profile.interests.length); %>
-                    <% const lastInt = profile.interests.length - 1; %>
-                    <% for (let i = 0; i < lastInt; i++) { %>
-                        <% console.log("profile.interests[i]::: ", profile.interests[i]); %>
-                        <% const name_id = `int${i + 1}`; %>
-                        <% const content = profile.interests[i]; %>
-                        <% console.log("name_id---- ", name_id); %>
-                        <div class="interests margin-botton" id="interests">
-                            <input type="text" name="<%= name_id %>" id="<%= name_id %>" value="<%= content %>" class="register-inputs">
-                        </div>
-                    <% } %>
-
-                    <div class="interests margin-botton" id="interests">
-                        <input type="text" name="<%= `int${lastInt + 1}` %>" class="register-inputs"
-                                id="<%= `int${lastInt + 1}` %>" value="<%= profile.interests[lastInt] %>">
-                        <button 
-                            id="register-add-button"
-                            title="Add more interests"
-                        >+</button>
-                    </div>
-                <% } else { %>
-                    <div class="interests margin-botton" id="interests">
-                        <input type="text" name="int1" id="int1" class="register-inputs">
-                        <button 
-                            id="register-add-button"
-                            title="Add more interests"
-                        >+</button>
-                    </div>
-                <% } %>
-            </div> -->
             
             <h2>Add your picture</h2>
             <input type="file" id="image-path" name="imagePath" accept="image/gif, image/jpeg" />
@@ -87,3 +55,4 @@
 </form>
 
 <script type="text/javascript" src="/js/code-register.js"></script>
+<script type="text/javascript" src="/js/register-inputs.js"></script>

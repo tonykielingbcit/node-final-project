@@ -41,21 +41,32 @@
 // also, it cheks username filling
 const registerButton = document.getElementById("registerButton");
 registerButton && registerButton.addEventListener("click", e => {
-    e.preventDefault();
+    // e.preventDefault();
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const username = document.getElementById("username");
-    console.log("password.value.trim()::: ", password.value.trim());
+    const firstName = document.getElementById("firstName");
+    const lastName = document.getElementById("lastName");
 
-    // if (password.value.trim() === "") {
-    //     console.log("password.value.trim()22222222::: ", password.value.trim());
-    //     e.preventDefault();
-    //     password.value = "";
-    //     password.style.border = "3px solid red";
-    //     password.placeholder = "Password is MANDATORY, please";
-    //     password.focus();
-    // } else 
-    if ((password.value.trim() === "") || (confirmPassword.value !== password.value)) {
+    if (lastName.value.trim() === "") {
+        e.preventDefault();
+        lastName.value = "";
+        lastName.style.border = "3px solid red";
+        lastName.placeholder = "Last Name is MANDATORY, please";
+        lastName.focus();
+    } else
+        lastName.style.border = "none";
+
+    if (firstName.value.trim() === "") {
+        e.preventDefault();
+        firstName.value = "";
+        firstName.style.border = "3px solid red";
+        firstName.placeholder = "Username is MANDATORY, please";
+        firstName.focus();
+    } else
+        firstName.style.border = "none";
+
+    if ((password.value.trim() === "") || (password.value.trim() !== confirmPassword.value.trim())) {
         // console.log("password: ", password.value, "confirmPassword: ", confirmPassword.value);
         e.preventDefault();
         password.value = "";
@@ -65,6 +76,9 @@ registerButton && registerButton.addEventListener("click", e => {
         confirmPassword.value = "";
         confirmPassword.style.border = "3px solid red";
         confirmPassword.placeholder = "Passwords MUST match, please";
+    } else {
+        password.style.border = "none";
+        confirmPassword.style.border = "none";
     }
 
     if (username.value.trim() === "") {
@@ -73,7 +87,7 @@ registerButton && registerButton.addEventListener("click", e => {
         username.style.border = "3px solid red";
         username.placeholder = "Username is MANDATORY, please";
         username.focus();
-    } else if (username.value.trim() !== "")
+    } else
         username.style.border = "none";
 
 });

@@ -7,7 +7,8 @@ const passportLocalmongoose = require("passport-local-mongoose");
 const comment = mongoose.Schema({
   profileId: mongoose.Schema.Types.ObjectId,
   message: mongoose.Schema.Types.String,
-  datePosted: mongoose.Schema.Types.Date
+  datePosted: mongoose.Schema.Types.Date,
+  name: mongoose.Schema.Types.String
 });
 
 const profileSchema = mongoose.Schema(

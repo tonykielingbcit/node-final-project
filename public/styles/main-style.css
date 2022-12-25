@@ -22,6 +22,9 @@ img {
     list-style-type: none;
 }
 
+*:focus {
+    outline: dotted lightseagreen;
+}
 
 
 /* main/body */
@@ -195,25 +198,33 @@ a {
 }
 
 .details-title-container {
-    /* border: 2px solid red; */
-    text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     background-color: lightblue;
     border-radius: 5px 5px 0 0;
     border-bottom: 2px solid lightseagreen;
-    /* padding: 0 0 2rem 0; */
 }
+
+
 .details-h2 {
-    margin-top: 0.5rem;
-    display: inline;
-    margin: 0 1rem;
+    margin: 0;
+    padding: 0;
+    margin-right: 1rem;
+    font-variant-caps: all-petite-caps;
+    /* display: flex;
+    align-items: center; */
+}
+.details-h2::first-letter {
+    font-size: calc(100% + 10px);
+    padding: 0;
+    margin: 0;
 }
 
 .details-edit-bt {
     font-weight: bold;
+    margin: 0 1rem;
 }
 
 .search-name-label {
@@ -557,4 +568,20 @@ footer {
 .create-inputs {
     width: 70%;
     margin-bottom: 0.5rem;
+}
+
+.delete-icon > img,
+.edit-icon > img {
+    display: block;
+    margin: auto;
+}
+.delete-icon:hover {
+    background-color: lightpink;
+    border: 3px solid red;
+    border-radius: 5px;
+}
+.edit-icon:hover {
+    background-color: lightblue;
+    border: 3px solid blue;
+    border-radius: 5px;
 }

@@ -26,11 +26,15 @@ class ProfileOps {
     if (gettingName) {
       // it gets the current name for each sender comments Profile
       const receivedCommentsWithName = await profile.receivedComments.map(async e => {
-        console.log("---------------- temp: ", e);
         const temp = await this.getProfileById(e.profileId);
-        console.log("---------------- temp: ", temp);
+        console.log("11-------------------------------- eeeeee: ", e, " sendername: ", temp ? temp.firstName : e.name);
+        const senderName = temp ? temp.firstName : undefined;
+        console.log("2222------ temp: ", temp, e.name, senderName);
+        // console.log("---------------- temp: ", temp);
         return ({
-            senderName: (temp && temp.firstName) || "",
+            senderName,
+            removed: !senderName && e.name,  
+                // it gets fresh name or name at the moment of recording, if profile has been removed
             profileId: e.profileId,
             message: e.message,
             datePosted: e.datePosted
