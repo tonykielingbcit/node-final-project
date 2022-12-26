@@ -58,11 +58,12 @@ class ProfileOps {
           { "username": param },
           { "email": param },
           { "firstName": param },
-          { "lastName": param }
+          { "lastName": param },
+          { "interests": param }
         ]
       }
       );
-    console.log("search resultsssssssssss: ", result);
+    // console.log("-------------search resultsssssssssss: ", result);
 
     return (result.length > 0
               ? result
