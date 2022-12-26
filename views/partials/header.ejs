@@ -1,13 +1,14 @@
 <link rel="stylesheet" href="/styles/header.css" />
 
-<%# console.log("allowed:: ", typeof isLogged !== "undefined"); %>
-
-<%# console.log("HEADER:::::::: "); %>
-
 <header>
   <nav class="menu">
     <div class="menu-left">
-      <a href="/" class="menu-items">Home</a>
+      <a href="/" class="menu-items">
+        <figure class="project-logo-container">
+        <!-- <figure> -->
+          <img src="/icons/users-icon.png" alt = "Home Page"/>
+        </figure>
+      </a>
       <% if (typeof isLogged !== "undefined" && isLogged) { %>
         <% if (typeof editor !== "undefined") { %>
           <% profile = editor; %>

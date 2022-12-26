@@ -6,7 +6,7 @@ const sendError = require("../services/sendError.js");
 indexRouter.get("/", (req, res) => {
     // console.log("INDEX ROUTER:::::::::", req.isLogged, req.profile, req.roles);
         return res.render("index", {
-            title: "Express Yourself - Home",
+            title: "SSD Yearbook - Home",
             profile: req.isLogged ? req.profile : undefined,
             isLogged: req.isLogged
         });
@@ -15,7 +15,7 @@ indexRouter.get("/", (req, res) => {
 
 
 indexRouter.get("/about", (req, res) => res.render("about", {
-        title: "Express Yourself - About",
+        title: "SSD Yearbook - About",
         profile: req.isLogged ? req.profile : undefined,
         isLogged: req.isLogged
     })

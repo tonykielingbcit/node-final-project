@@ -16,7 +16,7 @@ exports.Index = async function (req, res) {
   profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
 
   return res.render("profiles", {
-    title: "Express Yourself - Profiles",
+    title: "SSD Yearbook - Profiles",
     profiles: profiles.length ? profiles : [],
     isLogged: req.isLogged,
     profile: req.profile
@@ -31,7 +31,7 @@ exports.Search = async (req, res) => {
   const profiles = await _profileActions.searchFor(nameToSearch);
 
   return res.render("profile-search", {
-      title: "Express Yourself - Search",
+      title: "SSD Yearbook - Search",
       profiles,
       message: `No profile has been found for *${nameToSearch}*`,
       showReturn: true,
@@ -55,7 +55,7 @@ exports.Detail = async function (req, res) {
   // console.log("DETAILLLLLLLLLLLLLLLLL: ", req.isLogged);;
     // if (profile) {
       return res.render("profile-details", {
-        title: "Express Yourself - " + profile.firstName,
+        title: "SSD Yearbook - " + profile.firstName,
         profiles,
         editor: req.profile,
         profile,

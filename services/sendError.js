@@ -8,7 +8,7 @@ module.exports = async (req, res, msg = "") => {
 
     return res.status(404)
         .render("error", { 
-                title: "Express Yourself - Error",
+                title: "SSD Yearbook - Error",
                 errorMessage: msg || "No page has been found.",
                 addressError: msg ? "" : addressError,
                 isLogged: req.isLogged,

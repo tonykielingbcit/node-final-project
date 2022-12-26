@@ -1,6 +1,9 @@
 
 .index-page {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     margin-top: 2rem;
 }
 
@@ -15,11 +18,27 @@ p {
     font-size: 25px;
 }
 
+.text-container {
+    padding: 1rem;
+    text-align: center;
+    border: 1px solid blue;
+    border-radius: 8px;
+    width: 50%;
+    background-color: #615853;
+}
+
 .text-1,
 .text-2 {
     margin-top: 4rem;
 }
 
+.text-2 {
+    color: wheat;
+}
+
 .text-3 {
     margin-top: 0;
+    font-size: 18px;
+    color: darkblue;
+    font-weight: bold;
 }

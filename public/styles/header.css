@@ -52,6 +52,21 @@ a {
 
 .menu-right {
     display: flex;
-    /* justify-content: flex-start; */
-    /* border: 1px solid blue; */
+}
+
+
+/* figure { */
+.project-logo-container {
+    /* border: 1px solid red; */
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+
+/* figure > img { */
+.project-logo-container > img {
+    width: 70%;
 }

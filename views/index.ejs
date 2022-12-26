@@ -91,11 +91,15 @@
     <h3>Hello <%= displayName %> and welcome!</h3>
 
     <p class="text-1">Message of the day is:</p> 
-    <p class="text-2">
-        "<%= messages[randomNumber].quote %>"
-    </p>
-    <p class="text3">
-        "<%= messages[randomNumber].author %>"
-    </p>
+
+    <div class="text-container">
+      <p class="text-2">
+          "<%= messages[randomNumber].quote %>"
+      </p>
+      <p class="text-3">
+          <%= messages[randomNumber].author %>
+      </p>
+    </div>
+    
 </section>
 

@@ -47,7 +47,7 @@ apiProfilesRouter.get("/profiles/:id", (req, res) => {
     const person = profilesJson.filter(e => e.id === id)[0];
     if (!person) {
       res.status(404).render("error", { 
-        title: `Express Yourself - Error`,
+        title: "SSD Yearbook - Error",
         errorMessage: "No profile has been found."
       })
       return;

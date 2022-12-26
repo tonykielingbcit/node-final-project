@@ -66,6 +66,9 @@
     margin-bottom: 1.5rem;
 }
 
+.login-h2 {
+    margin-top: 5rem;
+}
 
 @media only screen and (min-width: 600px) {
     .form-container {
