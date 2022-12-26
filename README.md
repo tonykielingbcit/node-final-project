@@ -5,12 +5,13 @@
 
 **- Instalation**  
 On a terminal:
-1. `git clone https://github.com/tonykielingbcit/node-final-project`
-2. `cd node-final-project`
+1. `git clone https://github.com/tonykielingbcit/node-project`
+2. `cd node-project`
 3. `npm i`  
 <br />  
 
 **- Run**
+- set `.env` file accordingly
 - `npm run dev` - dev mode, OR
 - `npm start` - prod mode  
 <br />  
