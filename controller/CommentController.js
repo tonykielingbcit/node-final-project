@@ -5,13 +5,11 @@ const Profile = require("../models/Profile.js");
 
 // it handles new comments
 exports.CreateComment = async function (req, res) {
-    // console.log("\nNEWWWWWWWWWWWWWWWWWWWWWWWW CONTROLLERRRRRRRRRRRRRRRRRRRRRRRRRRRRRR\n");
     try {
         const { profileId, message, datePosted } = req.body;  // comment RECEIVER
         const { _id } = req.profile;  // comment SENDER
 
         const profile = await Profile.findById(profileId);
-        // console.log("profile === ", profile);
 
         const newComments = [
             ...profile.receivedComments, 
@@ -22,15 +20,12 @@ exports.CreateComment = async function (req, res) {
                 name: profile.firstName
             }
         ];
-        // console.log("newComments==== ", newComments);
-
+        
         const addCommentProfile = new Profile({
             ...profile._doc,
             receivedComments: newComments
         });
         
-        // console.log("addCommentProfile:: ", addCommentProfile);
-
         const error = addCommentProfile.validateSync();
         if (error)
             throw(error.message);

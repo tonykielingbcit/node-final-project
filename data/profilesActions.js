@@ -9,28 +9,25 @@ class ProfileOps {
 
   // DB methods
   async getAllProfiles() {
-    console.log("getting all profiles");
     // sorting by lastname first, and then firstname and email subsequently
     let profiles = await Profile.find().collation({locale: "en"}).sort({ lastName: 1, firstName: 1, email: 1 });
     return profiles;
   }
 
+
+
   async getProfileById(id, gettingName = false) {
     // gettingName is a flag to get all comment sender names
     // just in case other part of the system triggers this function but do not need names of the comments senders
-    console.log(`getting profile by id ${id}`);
     // sorting by lastname first, and then firstname and email subsequently
     let profile = await Profile.findById(id).sort({ lastName: 1, firstName: 1, email: 1 });
-    // console.log("----profile---- ", profile);
 
     if (gettingName) {
       // it gets the current name for each sender comments Profile
       const receivedCommentsWithName = await profile.receivedComments.map(async e => {
         const temp = await this.getProfileById(e.profileId);
-        console.log("11-------------------------------- eeeeee: ", e, " sendername: ", temp ? temp.firstName : e.name);
         const senderName = temp ? temp.firstName : undefined;
-        console.log("2222------ temp: ", temp, e.name, senderName);
-        // console.log("---------------- temp: ", temp);
+
         return ({
             senderName,
             removed: !senderName && e.name,  
@@ -63,130 +60,12 @@ class ProfileOps {
         ]
       }
       );
-    // console.log("-------------search resultsssssssssss: ", result);
-
+  
     return (result.length > 0
               ? result
               : undefined) ;
   }
 
-
-/*
-  async createProfile(input, img) {
-    // it arranges int(x) HTML fields into an array
-    const interests = [];
-    for(let item in input)
-      if (item.includes("int") && (input[item].trim().length > 0))
-        interests.push(input[item].trim());
-
-    try {
-      // console.log("this.createProfile: ", input);
-      // if(1) return ({obj: input, errorMsg: "rrrrrrrrrr"});
-
-      // const { name } = input;
-      const { username, email, password, confirmPassword, firstName, lastName } = input;
-      const { imagePath } = img || {};
-      const profile = {...input, interests };
-
-  // console.log("---coming data::: ", username, email, password, confirmPassword, firstName, lastName);
-  //     console.log("interests:: ", interests, imagePath);
-      // if (!1) {
-      //   return (
-      //     {
-      //       profile,
-      //       errorMsg: "ALL GOOD"
-      //     }
-      //   );
-      // }
-
-      if (password !== confirmPassword) // it is been done in fronte and now back end, as well
-        return ({
-            profile,
-            errorMsg: "Passwords MUST match, please"
-          });
-
-      let tempProfileObj = new Profile({
-        username,
-        email,
-        firstName,
-        lastName,
-        imagePath: (imagePath && imagePath.name) || undefined,
-        interests
-      });
-
-      const error = tempProfileObj.validateSync();
-
-      if (error) {
-        console.log("XXX Model is not valid!");
-        return {
-          profile,
-          errorMsg: error
-        };
-      }
-
-      // Model is valid, so save it
-      if (imagePath) {
-        const recordImgAt = path.join(__dirname, "..", "public", "images", imagePath.name);
-        await imagePath.mv(recordImgAt, (err) => {
-          if (err)
-            return({
-              profile,
-              errorMsg: err
-            });
-        });
-      }
-      
-      // // save data on DB
-      // const result = await tempProfileObj.save();
-      // const response = {
-      //   profile: result,
-      //   errorMsg: "",
-      // };
-      const response = Profile.register(
-        new Profile(tempProfileObj),
-        password,
-        (err, user, info) => {
-          if (err)
-            return false;
-          else {
-console.log("================= ", user, info);
-            return user
-          }
-        }
-      );
-        // function async (err, success) {
-        //     // Show registration form with errors if fail.
-        //     if (err)
-        //       return({
-        //         profile,
-        //         errorMsg: err.message || err || "We are facing technical issues. Sorry."
-        //       })
-// console.log("SUCESSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-            // // User registered so authenticate and redirect to secure area
-            // // passport.authenticate("local")(req, res, () => res.redirect("/secure/secure-area"));
-            // return passport.authenticate("local", { 
-            //     successRedirect : "/secure/secure-area", 
-            //     failureFlash : true
-            //   }),
-            //   function() {
-            //     return ({
-            //         profile: {...input, interests},
-            //         errorMsg: "ALL GOOD"
-            //       });
-            //   }
-        
-console.log("8888888888888888888888888888888888888888888888888888888888888888888888888888888888", response);
-      return response;
-
-    } catch (err) {
-      console.error("###ERROR on ProfileActions.Create", err.message || err);
-      return ({
-        errorMsg: err.message || err || "###ERROR on ProfileActions.Create",
-        profile: {input, ...interests}
-      });
-    }
-  }
-*/
 
 
   async deleteProfile(id) {
@@ -234,12 +113,9 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
       interests, 
       roles
     };
-    // console.log("NEW PROFILE::::::::::::::: ", profile);
 
     try {
       const receivedImage = files && files.imagePath;
-// console.log("NEW PROFILE IMAGETPATH::::::::::::::: ", (receivedImage && receivedImage.name) || profile.imagePath);
-
       const tempProfileToUpdate = await Profile.findById(profileId);
       
       let profileObj = new Profile({
@@ -264,14 +140,6 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
         else
           await profileObj.setPassword(newPassword);
       }
-// console.log("===============NEW PROFILEobjjjjjjjjjj::::::::::::::: ", profileObj);
-
-// if (1) {
-//   return ({
-//     profile,
-//     errorMessage: "looks good"
-//   });
-// }
 
       const error = profileObj.validateSync();
       if (error)
@@ -285,8 +153,6 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
         });
       }
 
-      // console.log("222222 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj);
-
       const result = await Profile.updateOne(
         { _id: profileId },
         { 
@@ -295,13 +161,12 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
           }
         }
       )
-      // console.log("33333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj.hash, profileObj.salt);
 
       if (profileObj.hash)
         profileObj.hash = undefined;
+
       if (profile.salt)
         profileObj.salt = undefined;
-      // console.log("3333333333     333333333333 PROFILEtoUPDATE AFTERRRRRRRRR:::::::::: ", profileObj.hash, profileObj.salt);
         
       return ({
         profile: { ...profileObj },
@@ -311,16 +176,13 @@ console.log("8888888888888888888888888888888888888888888888888888888888888888888
       
     } catch (err) {
       console.error("###ERROR on update!!!!!!!!!!!", err.message || err);
-
-        return ({
-          profile,
-          success: false,
-          errorMessage: err.message || err || "Error on updating profile. Please try again.",
-        });
+      return ({
+        profile,
+        success: false,
+        errorMessage: err.message || err || "Error on updating profile. Please try again.",
+      });
     }
   }
-
-
 }
 
 module.exports = ProfileOps;

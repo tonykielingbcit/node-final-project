@@ -1,47 +1,9 @@
 "use strict"
 
-// const registerAddButton = document.getElementById("register-add-button");
-// registerAddButton && registerAddButton.addEventListener("click", e => {
-//     e.preventDefault();
-
-//     const allInterestsElementsCount = document.getElementsByClassName("interests");
-//     const currentInterestsCount = allInterestsElementsCount.length;
-//     console.log("allInterestsElements::: ", currentInterestsCount);
-//     console.log("addddd+++++++++++", `int${currentInterestsCount}`);
-    
-//     const currentInput = document.getElementById(`int${currentInterestsCount}`);
-    
-//     if (currentInput.value.trim() === "") {
-//         currentInput.focus();
-//         return;
-//     }
-
-//     const interestsContainer = document.getElementById("interests-container");
-    
-//     const newDiv = document.createElement("div");
-//     newDiv.className = "interests margin-botton";
-//     newDiv.id = "interests";
-    
-//     const input = document.createElement("input");
-//     input.type = "text";
-//     input.className = "register-inputs";
-//     input.name = `int${currentInterestsCount + 1}`;
-//     input.id = `int${currentInterestsCount + 1}`;
-//     newDiv.appendChild(input);
-    
-//     const registerAddButton = document.getElementById("register-add-button");
-//     newDiv.appendChild(registerAddButton);
-
-//     interestsContainer.appendChild(newDiv);
-//     input.focus();
-// });
-
-
 // check whether password and confirmPassword match, if not, it does not go to the server and asks user to fix it
 // also, it cheks username filling
 const registerButton = document.getElementById("registerButton");
 registerButton && registerButton.addEventListener("click", e => {
-    // e.preventDefault();
     const password = document.getElementById("password");
     const confirmPassword = document.getElementById("confirmPassword");
     const username = document.getElementById("username");
@@ -67,7 +29,6 @@ registerButton && registerButton.addEventListener("click", e => {
         firstName.style.border = "none";
 
     if ((password.value === "") || (password.value !== confirmPassword.value)) {
-        // console.log("password: ", password.value, "confirmPassword: ", confirmPassword.value);
         e.preventDefault();
         password.value = "";
         password.style.border = "3px solid red";

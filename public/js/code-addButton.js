@@ -5,10 +5,7 @@ registerAddButton && registerAddButton.addEventListener("click", e => {
     e.preventDefault();
 
     const allInterestsElementsCount = document.getElementsByClassName("interests");
-    const currentInterestsCount = allInterestsElementsCount.length;
-    console.log("allInterestsElements::: ", currentInterestsCount);
-    console.log("addddd+++++++++++", `int${currentInterestsCount}`);
-    
+    const currentInterestsCount = allInterestsElementsCount.length;    
     const currentInput = document.getElementById(`int${currentInterestsCount}`);
     
     if (currentInput.value.trim() === "") {

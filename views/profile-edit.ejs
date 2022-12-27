@@ -1,7 +1,5 @@
 <link rel="stylesheet" href="/styles/edit.css" />
 
-<% console.log("4444444444profile on profile-edit:::: ", profile, editor); %>
-
 <% let msg = ""; %>
 <% if (typeof errorMessage !== "undefined") { %>
     <%   msg = errorMessage; %>
@@ -10,11 +8,6 @@
 <% if (typeof message !== "undefined") { %>
     <%   msg = message; %>
 <% } %>
-
-<%# let imagePath = ""; %>
-<%# if (typeof profile.imagePath !== "undefined") { %>
-    <%# imagePath = profile.imagePath %>
-<%# } %>
 
 <% let editorIsAdmin = ""; %>
 <% if (editor && editor.roles && editor.roles.isAdmin) { %>
@@ -91,8 +84,6 @@
                 </div>
             </div>
 
-
-<% console.log("PERMISSIONS:::: ", editor.roles.isAdmin, editor.roles.isManager, profile.roles.isAdmin, profile.roles.isManager); %>
             <% if (editorIsAdmin || editorIsManager) { %>
                 <h2 class="edit-inputs-label">Permissions</h2>
                 <div class="edit-permissions-container">
@@ -107,12 +98,7 @@
                 </div>
             <% } %>
 
-
             <%- include('./partials/interests.ejs', { profile: profile}) %>
-
-
-
-   <%# console.log("IMGAEPATH:::: ", profile.imagePath); %>
 
             <input type="text" name="tempImagePath" value="<%= profile.imagePath %>" hidden />
             
@@ -141,3 +127,4 @@
 </form>
 
 <script type="text/javascript" src="/js/validate-password.js"></script>
+

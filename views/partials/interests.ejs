@@ -3,13 +3,10 @@
 <h2>Interests</h2>
 <div class="interests-container" id="interests-container">
     <% if (profile && profile.interests && profile.interests.length > 0) { %>
-        <%# console.log("profile.interests::: ", profile.interests, profile.interests.length); %>
         <% const lastInt = profile.interests.length; %>
         <% for (let i = 0; i < lastInt; i++) { %>
-            <%# console.log("profile.interests[i]::: ", profile.interests[i]); %>
             <% const name_id = `int${i + 1}`; %>
             <% const content = profile.interests[i]; %>
-            <%# console.log("name_id---- ", name_id); %>
             <div class="interests margin-botton" id="interests">
                 <input type="text" name="<%= name_id %>" id="<%= name_id %>" value="<%= content %>" class="register-inputs">
             </div>

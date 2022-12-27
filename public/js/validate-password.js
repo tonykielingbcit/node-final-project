@@ -6,7 +6,6 @@ updateButton && updateButton.addEventListener("click", e => {
     const confirmPassword = document.getElementById("confirmPassword");
 
     if (newPassword.value !== confirmPassword.value) {
-        // console.log("password: ", password.value, "confirmPassword: ", confirmPassword.value);
         e.preventDefault();
         newPassword.value = "";
         newPassword.style.border = "3px solid red";

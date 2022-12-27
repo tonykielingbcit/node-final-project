@@ -20,7 +20,6 @@
     text-align: center;
     width: 50%;
     min-width: 300px;
-    /* border: 2px solid lime; */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +28,4 @@
 .about-page > p {
     font-size: 23px;
     width: 90%;
-    /* text-align: center; */
-    /* align-self: center; */
-    /* border: 2px solid red; */
 }

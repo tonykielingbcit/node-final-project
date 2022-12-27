@@ -15,7 +15,7 @@ const profileSchema = mongoose.Schema(
   {
     // MongoDB will automatically create an _id property, so no need to specify it UNLESS we want to create our own
     
-    name: {type: "String"},////////////////////////////////temp one, has to be removed later on
+    // name: {type: "String"},////////////////////////////////temp one, has to be removed later on
     username: { 
       type: mongoose.Schema.Types.String, 
       required: true,
@@ -24,21 +24,21 @@ const profileSchema = mongoose.Schema(
       trim: true,
       index: true
     },
+
     email: { 
       type: mongoose.Schema.Types.String
     },
-    // password: { 
-    //   type: mongoose.Schema.Types.String, 
-      // required: true
-    // },
+    
     firstName: { 
       type: mongoose.Schema.Types.String, 
       required: true
     },
+    
     lastName: { 
       type: mongoose.Schema.Types.String,
       required: true
     },
+    
     imagePath: { 
       type: mongoose.Schema.Types.String
     },

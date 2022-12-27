@@ -1,6 +1,5 @@
 
 .register-container {
-    /* background-color: lightseagreen; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -9,7 +8,6 @@
 
 
 .form-container {
-    /* background-color: lightgreen; */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -27,12 +25,10 @@
 
 .interests {
     width: 100%;
-    /* text-align: center; */
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.5rem;
-    /* border: 1px solid red; */
 }
 .margin-botton {
     margin-bottom: 0.5rem;
@@ -41,7 +37,6 @@
 .error-message-none {
     display: none;
 }
-/* .error-message-yes { */
 .error-message {
     background-color: lightcoral;
     color: maroon;

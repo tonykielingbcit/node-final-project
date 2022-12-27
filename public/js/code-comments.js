@@ -1,24 +1,5 @@
 "use strict"
 
-// const submitBt = document.getElementById("submitButton");
-// const txtArea = document.getElementById("txtArea");
-// const message = document.getElementById("message");
-// let changesOnTxtArea = false;
-
-// txtArea && txtArea.addEventListener("input", _ => changesOnTxtArea = true );
-
-// // contact message
-// submitBt && submitBt.addEventListener("click", e => {
-//     if (!changesOnTxtArea)  {
-//         e.preventDefault();
-//         txtArea.style.border = "4px solid red";
-//         message.textContent = "Please, type something.";
-//         message.style.color = "red";
-//         txtArea.focus();
-//     }
-// });
-
-
 // handling comment messages
 const openSubmitComment = document.getElementById("open-submit-comment-form");
 openSubmitComment && openSubmitComment.addEventListener("click", e => {
@@ -28,11 +9,13 @@ openSubmitComment && openSubmitComment.addEventListener("click", e => {
 });
 
 
+
 const cancelCommentButton = document.getElementById("comment-cancel");
 cancelCommentButton && cancelCommentButton.addEventListener("click", e => {
     e.preventDefault();
     document.getElementById("comment-form").style.display = "none";
 });
+
 
 
 const submitCommentButton = document.getElementById("comment-submit");
@@ -41,7 +24,7 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
     const MESSAGE_FAIL = "Comment failed. Sorry!";
     const commentText = document.getElementById("comment-textarea");
     const comment = commentText.value.trim();
-    console.log("comment= ", comment, window.location);
+
     if (!comment) {
         e.preventDefault();
         commentText.focus();
@@ -53,21 +36,18 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
         commentMessage.style.display = "block";
         commentMessage.style.borderRadius = "5px";
         
-        const afterButton = document.getElementById("comment-after-submit-button");
-        
+        const afterButton = document.getElementById("comment-after-submit-button");        
         
         // go to db and insert new data
         // hide buttons and place a message for succes or fail
         try {
             const profileId = document.getElementById("profileId").innerText.trim();
-            // console.log("profileId:::::::::: ", profileId);
-            // console.log("DateNOW:::::::::: ", Date.now());
             const data = {
                 profileId,
                 message: comment,
                 datePosted: Date.now()
             };
-            console.log("data:::::::::", data);
+
             const sendComment = await fetch("/comments/create", {
                     method: "POST",
                     headers: {'Content-Type': 'application/json'}, 
@@ -76,7 +56,6 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
                 .then(res => res.json())
                 .then(data => data);
 
-            console.log("sendComment::: ", sendComment);
             // if success
             if (sendComment.success) {
                 commentMessage.innerHTML = MESSAGE_SUCCESS;
@@ -89,22 +68,11 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
             // if fail
             } else {
                 throw({message: "Problem sending comment to be "})
-                // commentMessage.innerHTML = MESSAGE_FAIL;
-                // commentText.style.backgroundColor = "lightcoral";
-                // commentMessage.classList.add("comment-message-fail");
-                // const tryAgainButton = document.getElementById("comment-after-submit-button");
-                // console.log("tryAgainButton= ", tryAgainButton);
-                // afterButton.style.display = "block";
-                // afterButton.style.margin = "auto";
-                // afterButton.innerHTML = "Try Again.";
             }
         } catch (error) {
-            console.error("###ERROR: ", error.message || error);
             commentMessage.innerHTML = MESSAGE_FAIL;
             commentText.style.backgroundColor = "lightcoral";
             commentMessage.classList.add("comment-message-fail");
-            // const tryAgainButton = document.getElementById("comment-after-submit-button");
-            // console.log("tryAgainButton= ", tryAgainButton);
             afterButton.style.display = "block";
             afterButton.style.margin = "auto";
             afterButton.innerHTML = "Try Again.";
@@ -113,10 +81,10 @@ submitCommentButton && submitCommentButton.addEventListener("click", async e => 
 });
 
 
+
 const commentAfterSubmitButton = document.getElementById("comment-after-submit-button");
 commentAfterSubmitButton && commentAfterSubmitButton.addEventListener("click", e => {
     e.preventDefault();
-    console.log("e.target.innerHTML: ", e.target.innerHTML);
     const action = e.target.innerHTML;
     if (action === "Close this box")
         return window.location.reload();
@@ -132,7 +100,6 @@ commentAfterSubmitButton && commentAfterSubmitButton.addEventListener("click", e
         commentMessage.classList.remove("comment-message-fail");
         const commentButtons = document.getElementById("comment-buttons");
         commentButtons.style.display = "flex";
-        commentButtons.style.flexDirection = "column";
-    
+        commentButtons.style.flexDirection = "column";    
     }
 });
