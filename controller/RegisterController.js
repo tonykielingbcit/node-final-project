@@ -9,7 +9,13 @@ exports.GetRegisterPage = async function (req, res) {
   if (req.isLogged)
     return res.redirect("/");
 
-  return res.render("admission/register", {title: "REGISTER TITLE", profile: {}});
+  return res.render("admission/register", 
+    {
+      title: "REGISTER TITLE", 
+      profile: {}, 
+      cannotEdit: "" // field used to allow/disallow edition on interests component
+    }
+  );
 };
 
 

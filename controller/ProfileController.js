@@ -55,7 +55,7 @@ exports.Detail = async function (req, res) {
       layoutPath: "./layouts/sideBar.ejs"
     });
   } catch (err) {
-    console.log("#Error on Detail", err.message || err);
+    console.log("#ERROR on Detail", err.message || err);
     sendError(req, res, (err.message || err));
   }
 };

@@ -80,7 +80,7 @@ class ProfileOps {
         else throw new Error();
 
     } catch(err) {
-        console.log(`### Error on deleting ${id}`);
+        console.log(`###ERROR on deleting ${id}`);
         return({
             success: false,
             message: `Error (${err.message || err || " on deleting profile. Please try again."})`
@@ -118,16 +118,16 @@ class ProfileOps {
     try {
       const receivedImage = files && files.imagePath;
       const tempProfileToUpdate = await Profile.findById(profileId);
-      
+
       let profileObj = new Profile({
           _id: profileId,
-          firstName: profile.firstName,
-          lastName: profile.lastName,
-          email: profile.email,
-          username: profile.username,
+          firstName: profile.firstName || tempProfileToUpdate.firstName,
+          lastName: profile.lastName || tempProfileToUpdate.lastName,
+          email: profile.email || tempProfileToUpdate.email,
+          username: profile.username || tempProfileToUpdate.username,
           interests,
           roles,
-          imagePath: (receivedImage && receivedImage.name) || profile.imagePath,
+          imagePath: (receivedImage && receivedImage.name) || profile.imagePath || tempProfileToUpdate.imagePath,
           receivedComments: tempProfileToUpdate.receivedComments
         });
 
@@ -172,7 +172,7 @@ class ProfileOps {
       return ({
         profile: { ...profileObj },
         success: true,
-        message: result.modifiedCount > 0 ? "Update has been done successfully! \\o/" : "No changes detected."
+        message: result.modifiedCount > 0 ? "Update has been done successfully!  \\o/" : "No changes detected."
       });
       
     } catch (err) {

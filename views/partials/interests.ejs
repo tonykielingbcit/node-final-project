@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="/styles/register.css" />
 
+
 <h2>Interests</h2>
 <div class="interests-container" id="interests-container">
     <% if (profile && profile.interests && profile.interests.length > 0) { %>
@@ -8,13 +9,14 @@
             <% const name_id = `int${i + 1}`; %>
             <% const content = profile.interests[i]; %>
             <div class="interests margin-botton" id="interests">
-                <input type="text" name="<%= name_id %>" id="<%= name_id %>" value="<%= content %>" class="register-inputs">
+                <input type="text" name="<%= name_id %>" id="<%= name_id %>" value="<%= content %>" 
+                    class="register-inputs" <%= cannotEdit %> >
             </div>
         <% } %>
 
         <div class="interests margin-botton" id="interests">
             <input type="text" name="<%= `int${lastInt + 1}` %>" class="register-inputs"
-                    id="<%= `int${lastInt + 1}` %>" value="<%= profile.interests[lastInt] %>">
+                    id="<%= `int${lastInt + 1}` %>" value="<%= profile.interests[lastInt] %>" <%= cannotEdit %> >
             <button 
                 id="register-add-button"
                 title="Add more interests"
@@ -22,10 +24,11 @@
         </div>
     <% } else { %>
         <div class="interests margin-botton" id="interests">
-            <input type="text" name="int1" id="int1" class="register-inputs">
+            <input type="text" name="int1" id="int1" class="register-inputs" <%= cannotEdit %>>
             <button 
                 id="register-add-button"
                 title="Add more interests"
+                <%= cannotEdit %>
             >+</button>
         </div>
     <% } %>
