@@ -4,13 +4,13 @@ const path = require("path");
 const passport = require("passport");
 const Profile = require("../models/Profile.js");
 
+
 exports.GetRegisterPage = async function (req, res) {
   if (req.isLogged)
     return res.redirect("/");
 
   return res.render("admission/register", {title: "REGISTER TITLE", profile: {}});
 };
-
 
 
 

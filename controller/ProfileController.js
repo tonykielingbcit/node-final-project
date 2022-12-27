@@ -46,14 +46,14 @@ exports.Detail = async function (req, res) {
     profiles = profiles.filter(e => e._id.toString() !== profileId.toString());
     profiles = profiles.filter(e => e._id.toString() !== req.profile._id.toString());
 
-      return res.render("profile-details", {
-        title: "SSD Yearbook - " + profile.firstName,
-        profiles,
-        editor: req.profile,
-        profile,
-        isLogged: req.isLogged,
-        layoutPath: "./layouts/sideBar.ejs"
-      });
+    return res.render("profile-details", {
+      title: "SSD Yearbook - " + profile.firstName,
+      profiles,
+      editor: req.profile,
+      profile,
+      isLogged: req.isLogged,
+      layoutPath: "./layouts/sideBar.ejs"
+    });
   } catch (err) {
     console.log("#Error on Detail", err.message || err);
     sendError(req, res, (err.message || err));
@@ -66,7 +66,7 @@ exports.Delete = async (req, res) => {
   const profileId = req.params.id;
   const profile = await _profileActions.getProfileById(profileId);
 
-  res.render("profile-delete", {
+  return res.render("profile-delete", {
       title: "Delete Profile",
       editor: req.profile,
       profile,
@@ -84,7 +84,7 @@ exports.DeleteProfile = async (req, res) => {
 
   const deleteProfile = await _profileActions.deleteProfile(profileId);
   
-  res.render("profile-delete", {
+  return res.render("profile-delete", {
       title: "Delete Profile - Success",
       profile,
       message: deleteProfile.message,

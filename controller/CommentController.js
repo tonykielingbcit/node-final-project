@@ -1,60 +1,13 @@
 "use strict"
 
-const Profile = require("../models/Profile.js");
-
+const handleComment = require("../data/commentsActions");
 
 // it handles new comments
 exports.CreateComment = async function (req, res) {
-    try {
-        const { profileId, message, datePosted } = req.body;  // comment RECEIVER
-        const { _id } = req.profile;  // comment SENDER
+    const { profileId, message, datePosted } = req.body;  // comment RECEIVER
+    const { _id } = req.profile;  // comment SENDER
+    
+    const newMessage = await handleComment(profileId, message, datePosted, _id);
 
-        const profile = await Profile.findById(profileId);
-
-        const newComments = [
-            ...profile.receivedComments, 
-            {
-                profileId: _id,
-                message,
-                datePosted,
-                name: profile.firstName
-            }
-        ];
-        
-        const addCommentProfile = new Profile({
-            ...profile._doc,
-            receivedComments: newComments
-        });
-        
-        const error = addCommentProfile.validateSync();
-        if (error)
-            throw(error.message);
-
-        else console.log("got NOOOOOOOOOOOOO errorr "); // debug purposes
-
-        
-
-        await Profile.updateOne(
-            {_id: addCommentProfile._id},
-            { 
-              $set: {
-                name: addCommentProfile.name,
-                interests: addCommentProfile.interests,
-                imagePath: addCommentProfile.imagePath,
-                receivedComments: addCommentProfile.receivedComments
-              }
-            }
-        );
-
-        return res.json({
-            success: true,
-            message: ""
-        });
-    } catch(err) {
-        console.log("ERROR on inserting new comment", err.message || err);
-        return res.json({
-            success: false,
-            message: err.message || err
-        });
-    }
+    return res.json(newMessage);
 }

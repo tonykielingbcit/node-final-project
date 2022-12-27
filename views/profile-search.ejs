@@ -19,7 +19,7 @@
 
     <div class="profiles-list-table">
         <table>
-            <% if (profiles.length > 0) { %>
+            <% if (profiles && profiles.length > 0) { %>
                 <tr>
                     <th>Last Name</th>
                     <th>First Name</th>
@@ -60,7 +60,7 @@
                     </a>
                 <% } %>
             <% } else { %>
-                <h3><%= message %></h3>
+                <h3 class="no-message"><%= message %></h3>
             <% } %>
         </table>
     </div>

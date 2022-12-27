@@ -50,6 +50,7 @@ class ProfileOps {
   async searchFor(str) {
     const param = new RegExp(".*" + str + ".*");
 
+    // user listing page should allow searching/filtering
     const result = await Profile.find({
         $or: [
           { "username": param },

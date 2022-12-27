@@ -50,3 +50,8 @@ td {
     color: maroon;
 }
 
+.no-message {
+    background-color: lightcoral;
+    padding: 1rem;
+    border-radius: 7px;
+}
