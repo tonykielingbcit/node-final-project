@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="/styles/delete.css" />
 
 <% const id = profile._id %>
+<% const isDisabled = itIsDone ? "disabled" : ""; %>
 
 <form 
     action="/profiles/delete/<%= profile._id %>"
@@ -28,6 +29,7 @@
                     class="delete-button"
                     type="submit"
                     value="I am sure!"
+                    <%= isDisabled %>
                 >
         </div>
     </section>

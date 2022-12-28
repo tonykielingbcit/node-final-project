@@ -5,9 +5,12 @@ const passportLocalmongoose = require("passport-local-mongoose");
 
 // schema for comments
 const comment = mongoose.Schema({
-  profileId: mongoose.Schema.Types.ObjectId,
+  //about message:
   message: mongoose.Schema.Types.String,
   datePosted: mongoose.Schema.Types.Date,
+  
+  // about sender:
+  profileId: mongoose.Schema.Types.ObjectId,
   name: mongoose.Schema.Types.String
 });
 
@@ -61,7 +64,13 @@ const profileSchema = mongoose.Schema(
         type: mongoose.Schema.Types.Boolean,
         default: false,
       }
-    }
+    },
+
+    // would have profile modified for isRemoved instead of deleting it
+    // isRemoved: {
+    //   type: mongoose.Schema.Types.Boolean,
+    //   default: false
+    // }
   },
   // as a second argument, let's specify the collection we want to work with
   { collection: "profiles" }

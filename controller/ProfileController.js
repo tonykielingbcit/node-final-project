@@ -24,11 +24,12 @@ exports.Index = async function (req, res) {
 exports.Search = async (req, res) => {
   const nameToSearch = req.body.searchFor;
   const profiles = await _profileActions.searchFor(nameToSearch);
+  // on searching, the current/logged user will be displayed as well (could filter, but it is been kept)
 
   return res.render("profile-search", {
       title: "SSD Yearbook - Search",
       profiles,
-      message: `No profile has been found for *${nameToSearch}*`,
+      message: `No profile has been found regarding the word *${nameToSearch}*`,
       showReturn: true,
 
       isLogged: req.isLogged,
@@ -71,7 +72,8 @@ exports.Delete = async (req, res) => {
       editor: req.profile,
       profile,
       message: "Are you sure you want to delete this profile?",
-      isLogged: req.isLogged
+      isLogged: req.isLogged,
+      itIsDone: false
     });
 };
 
@@ -89,7 +91,8 @@ exports.DeleteProfile = async (req, res) => {
       profile,
       message: deleteProfile.message,
       editor: req.profile,
-      isLogged: req.isLogged
+      isLogged: req.isLogged,
+      itIsDone: true
     });
 };
 
@@ -103,7 +106,7 @@ exports.EditProfile = async (req, res) => {
       title: "Update Profile",
       profile,
       isLogged: req.isLogged,
-      editor: req.profile,
+      editor: req.profile
     });
 };
 

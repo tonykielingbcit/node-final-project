@@ -19,18 +19,20 @@ class ProfileOps {
   async getProfileById(id, gettingName = false) {
     // gettingName is a flag to get all comment sender names
     // just in case other part of the system triggers this function but do not need names of the comments senders
-    // sorting by lastname first, and then firstname and email subsequently
-    let profile = await Profile.findById(id).sort({ lastName: 1, firstName: 1, email: 1 });
+    let profile = await Profile.findById(id);
 
     if (gettingName) {
       // it gets the current name for each sender comments Profile
       const receivedCommentsWithName = await profile.receivedComments.map(async e => {
-        const temp = await this.getProfileById(e.profileId);
-        const senderName = temp ? temp.firstName : undefined;
+        const commentSender = await this.getProfileById(e.profileId);
 
+        const senderWasRemoved = ((!commentSender) || (Object.keys(commentSender).length === 0) && (empty.constructor === Object))
+              ? true
+              : false;
+        
         return ({
-            senderName,
-            removed: !senderName && e.name,  
+            senderName: senderWasRemoved ? e.name : commentSender.firstName,
+            removed: senderWasRemoved,
                 // it gets fresh name or name at the moment of recording, if profile has been removed
             profileId: e.profileId,
             message: e.message,

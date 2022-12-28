@@ -2,7 +2,7 @@
 
 const Profile = require("../models/Profile.js");
 
-module.exports = async(profileId, message, datePosted, _id) => {
+module.exports = async(profileId, message, datePosted, _id, senderName) => {
     try {
         const profile = await Profile.findById(profileId);
 
@@ -12,7 +12,7 @@ module.exports = async(profileId, message, datePosted, _id) => {
                 profileId: _id,
                 message,
                 datePosted,
-                name: profile.firstName
+                name: senderName
             }
         ];
         
