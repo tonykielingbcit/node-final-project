@@ -6,6 +6,7 @@ exports.ProceedLogout = async (req, res, next) => {
       if (err)
         console.error("###ERROR on logout error: ", err.message || err);
 
-      return res.redirect("/");
+      // Before logging in, users should only be able to see the home page, registration page, and login page.
+      return res.redirect("/about");
     });
 };

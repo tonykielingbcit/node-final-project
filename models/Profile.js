@@ -29,17 +29,20 @@ const profileSchema = mongoose.Schema(
     },
 
     email: { 
-      type: mongoose.Schema.Types.String
+      type: mongoose.Schema.Types.String,
+      trim: true
     },
     
     firstName: { 
-      type: mongoose.Schema.Types.String, 
-      required: true
+      type: mongoose.Schema.Types.String,
+      required: true,
+      trim: true
     },
     
     lastName: { 
       type: mongoose.Schema.Types.String,
-      required: true
+      required: true,
+      trim: true
     },
     
     imagePath: { 
