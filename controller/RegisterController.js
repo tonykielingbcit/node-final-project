@@ -30,7 +30,6 @@ exports.ProceedRegister = async function (req, res) {
     interests.push(input[item].trim());
     
   const profile = {...input, interests };
-        
   try {          
     const { username, email, password, confirmPassword, firstName, lastName } = input;
     const { imagePath } = req.files || {};
@@ -44,25 +43,14 @@ exports.ProceedRegister = async function (req, res) {
     });
     
     if (password !== confirmPassword) // it is been done in front and now back end, as well
-      return res.render("admission/register",
-      {
-        title: "Register - error",
-        profile,
-        errorMessage: "Passwords MUST be the same, please."
-      }
-    );
+      throw new Error ("Passwords MUST be the same, please.");
+
 
     const error = tempProfile.validateSync();
     
     if (error) {
       console.log("###ERROR - Model is not valid!");
-      return res.render("admission/register",
-        {
-          title: "Register - error",
-          profile,
-          errorMessage: "Error on validating data. Please, try again."
-        }
-      );
+      throw new Error ("Error on validating data. Please, try again.");
     }
 
     // Model is valid, so save it
@@ -70,13 +58,7 @@ exports.ProceedRegister = async function (req, res) {
       const recordImgAt = path.join(__dirname, "..", "public", "images", imagePath.name);
       await imagePath.mv(recordImgAt, (err) => {
         if (err)
-          return res.render("admission/register",
-            {
-              title: "Register - error",
-              profile,
-              errorMessage: "Error on validating image. Please, try again."
-            }
-          );
+          throw new Error ("Error on validating image. Please, try again.");
       });
     }
           
@@ -90,7 +72,8 @@ exports.ProceedRegister = async function (req, res) {
               return res.render("admission/register", {
                   title: "Register - error",
                   profile,
-                  errorMessage: err.message || err
+                  errorMessage: err.message || err,
+                  cannotEdit: ""
               });
 
           // User registered so authenticate and redirect to secure area
@@ -100,10 +83,12 @@ exports.ProceedRegister = async function (req, res) {
 
   } catch (err) {
     console.error("###ERROR on ProceedRegister", err.message || err);
+    
     return res.render("admission/register", {
       title: "Register - error",
       profile,
-      errorMessage: err
+      errorMessage: err.message || err,
+      cannotEdit: ""
   });
   }
 }
